@@ -16,7 +16,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
     private static $_trackers = array(
         'product', 'category', 'attribute',
-        'order', 'admin_login'
+        'shipping_payment', 'order', 'admin_login'
     );
 
 
