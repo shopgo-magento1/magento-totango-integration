@@ -14,6 +14,12 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     const XML_PATH_TOTANGO_TRACKERS = 'shopgo_totango/trackers/';
 
 
+    private static $_trackers = array(
+        'product', 'category', 'attribute',
+        'order', 'admin_login'
+    );
+
+
     public function isEnabled()
     {
         return Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ENABLED);
@@ -21,7 +27,13 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
     public function isTrackerEnabled($tracker)
     {
-        return Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
+        return in_array($tracker, self::getTrackers())
+            && Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
+    }
+
+    public static function getTrackers()
+    {
+        return self::$_trackers;
     }
 
     public function track($event, $data)
