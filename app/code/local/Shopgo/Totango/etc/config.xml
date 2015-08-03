@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopgo_Totango>
+            <version>1.0.0</version>
+        </Shopgo_Totango>
+    </modules>
+    <global>
+        <helpers>
+            <totango>
+                <class>Shopgo_Totango_Helper</class>
+            </totango>
+        </helpers>
+        <models>
+            <totango>
+                <class>Shopgo_Totango_Model</class>
+            </totango>
+        </models>
+    </global>
+</config>
