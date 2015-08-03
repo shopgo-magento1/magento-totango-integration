@@ -26,6 +26,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
     public function track($event, $data)
     {
+        if (empty($data)) {
+            return false;
+        }
+
         $params = array(
             'sdr_s' => Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_SERVICE_ID),
             'sdr_o' => Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID)
@@ -54,16 +58,16 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 return false;
         }
 
-        return $this->track($params);
+        return $this->sendRequest($params);
     }
 
-    public function track($params)
+    public function sendRequest($params)
     {
         if (empty($params)) {
-            return '';
+            return false;
         }
 
-        $result     = null;
+        $result     = '';
         $url        = self::URL;
         $httpClient = new Varien_Http_Client();
 
