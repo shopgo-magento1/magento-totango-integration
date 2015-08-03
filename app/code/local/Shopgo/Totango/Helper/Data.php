@@ -50,6 +50,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 $params['sdr_u'] = Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
                 $params['sdr_u.' . $data['attribute']['name']] = $data['attribute']['value'];
                 break;
+            default:
+                return false;
         }
 
         return $this->track($params);
