@@ -2,7 +2,7 @@
 
 class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 {
-    const URL = 'https://sdr.totango.com/pixel.gif/';
+    const SERVICE_URL = 'https://sdr.totango.com/pixel.gif/';
 
     const XML_PATH_TOTANGO_GENERAL_ENABLED = 'shopgo_totango/general/enabled';
 
@@ -68,7 +68,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         $result     = '';
-        $url        = self::URL;
+        $url        = self::SERVICE_URL;
         $httpClient = new Varien_Http_Client();
 
         $result = $httpClient
