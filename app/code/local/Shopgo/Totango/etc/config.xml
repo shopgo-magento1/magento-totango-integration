@@ -1,4 +1,25 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * ShopGo
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ *
+ * @category    Shopgo
+ * @package     Shopgo_Core
+ * @authors     Ammar <ammar@shopgo.me>
+ *              Emad  <emad@shopgo.me>
+ *              Ahmad <ahmadalkaid@shopgo.me>
+ *              Aya   <aya@shopgo.me>
+ * @copyright   Copyright (c) 2015 Shopgo. (http://www.shopgo.me)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
 <config>
     <modules>
         <Shopgo_Totango>
