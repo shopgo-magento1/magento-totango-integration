@@ -7,10 +7,10 @@
 
 ### Authors ###
 
-Ammar (<ammar@shopgo.me>)
-Emad  (<emad@shopgo.me>)
-Ahmad (<ahmadalkaid@shopgo.me>)
-Aya   (<aya@shopgo.me>)
+* Ammar (<ammar@shopgo.me>)
+* Emad  (<emad@shopgo.me>)
+* Ahmad (<ahmadalkaid@shopgo.me>)
+* Aya   (<aya@shopgo.me>)
 
 ### License ###
 
