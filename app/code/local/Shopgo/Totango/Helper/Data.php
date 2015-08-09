@@ -171,6 +171,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 } else {
                     $this->log('Insufficient tracking data');
                 }
+
                 break;
             case 'account-attribute':
                 if (is_array($data)) {
@@ -182,6 +183,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 } else {
                     $this->log('Insufficient tracking data');
                 }
+
                 break;
             case 'user-attribute':
                 if (is_array($data)) {
@@ -196,6 +198,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 } else {
                     $this->log('Insufficient tracking data');
                 }
+
                 break;
         }
 
