@@ -17,18 +17,18 @@ Mage::helper('totango')->track('user-activity', array(
 * Track Account-Attribute Event:
 ```
 Mage::helper('totango')->track('account-attribute', array(
-    'MY_ATTRIBUTE1_NAME' => MY_ATTRIBUTE1_VALUE,
-    'MY_ATTRIBUTE2_NAME' => MY_ATTRIBUTE2_VALUE,
-    'MY_ATTRIBUTE3_NAME' => MY_ATTRIBUTE3_VALUE,
+    'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+    'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+    'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
     ...
 ));
 ```
 * Track User-Attribute Event:
 ```
 Mage::helper('totango')->track('user-attribute', array(
-    'MY_ATTRIBUTE1_NAME' => MY_ATTRIBUTE1_VALUE,
-    'MY_ATTRIBUTE2_NAME' => MY_ATTRIBUTE2_VALUE,
-    'MY_ATTRIBUTE3_NAME' => MY_ATTRIBUTE3_VALUE,
+    'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+    'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+    'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
     ...
 ));
 ```
