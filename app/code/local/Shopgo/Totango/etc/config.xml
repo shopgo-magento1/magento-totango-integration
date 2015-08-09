@@ -37,6 +37,17 @@
                 <class>Shopgo_Totango_Model</class>
             </totango>
         </models>
+        <events>
+            <sales_order_save_after>
+                <observers>
+                    <sales_order_save_after_handler>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>PostOrderData</method>
+                    </sales_order_save_after_handler>
+                </observers>
+            </sales_order_save_after>
+        </events>
     </global>
     <default>
         <shopgo_totango>
