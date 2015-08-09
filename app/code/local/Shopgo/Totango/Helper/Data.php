@@ -213,7 +213,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 ->request(Varien_Http_Client::POST);
 
             if ($response->isSuccessful()) {
-                $result = $response->getBody();
+                $result = true;
             } else {
                 $this->log('"Send Request" response was unsuccessful');
             }
