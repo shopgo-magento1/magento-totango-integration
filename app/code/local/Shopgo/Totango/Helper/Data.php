@@ -133,7 +133,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      *
      * @param string $event
      * @param array $data
-     * @return string|bool
+     * @return bool
      */
     public function track($event, $data)
     {
