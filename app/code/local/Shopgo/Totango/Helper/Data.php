@@ -105,7 +105,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         $result = false;
 
         if (in_array($tracker, self::getTrackers())) {
-            $result = Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
+            $result =
+                Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
 
             if (!$result) {
                 $this->log(sprintf('Tracker "%s" is disabled', $tracker));
@@ -144,11 +145,14 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         $params = array(
-            'sdr_s' => Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_SERVICE_ID),
-            'sdr_o' => Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID)
+            'sdr_s' =>
+                Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_SERVICE_ID),
+            'sdr_o' =>
+                Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID)
         );
 
-        $accountName = Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME);
+        $accountName =
+            Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME);
 
         if ($accountName) {
             $params['sdr_odn'] = $accountName;
@@ -157,26 +161,37 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         switch ($event) {
             case 'user-activity':
                 if (isset($data['action']) && isset($data['module'])) {
-                    $params['sdr_u'] = Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
+                    $params['sdr_u'] =
+                        Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
+
                     $params['sdr_a'] = $data['action'];
                     $params['sdr_m'] = $data['module'];
+
                     $result = true;
                 } else {
                     $this->log('Insufficient tracking data');
                 }
                 break;
             case 'account-attribute':
-                if (isset($data['attribute']['name']) && isset($data['attribute']['value'])) {
-                    $params['sdr_o.' . $data['attribute']['name']] = $data['attribute']['value'];
+                if (is_array($data)) {
+                    foreach ($data as $name => $value) {
+                        $params["sdr_o.{$name}"] = $value;
+                    }
+
                     $result = true;
                 } else {
                     $this->log('Insufficient tracking data');
                 }
                 break;
             case 'user-attribute':
-                if (isset($data['attribute']['name']) && isset($data['attribute']['value'])) {
-                    $params['sdr_u'] = Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
-                    $params['sdr_u.' . $data['attribute']['name']] = $data['attribute']['value'];
+                if (is_array($data)) {
+                    $params['sdr_u'] =
+                        Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
+
+                    foreach ($data as $name => $value) {
+                        $params["sdr_u.{$name}"] = $value;
+                    }
+
                     $result = true;
                 } else {
                     $this->log('Insufficient tracking data');
