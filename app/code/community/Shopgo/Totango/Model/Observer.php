@@ -38,39 +38,37 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
+        $currentOrderState = $observer->getOrder()->getState();
+        $orderState = array(
+            'complete' => Mage_Sales_Model_Order::STATE_COMPLETE,
+            'canceled' => Mage_Sales_Model_Order::STATE_CANCELED
+        );
+
         switch (true) {
-            case $helper->isTrackerEnabled('completed_orders'):
-                $stateComplete = Mage_Sales_Model_Order::STATE_COMPLETE;
-                $orderState    = $observer->getOrder()->getState();
+            case $helper->isTrackerEnabled('completed_orders')
+                && $currentOrderState == $orderState['complete']:
+                $completedOrders = Mage::getModel('sales/order')
+                    ->getCollection()
+                    ->addAttributeToFilter('status', array(
+                        'eq' => $orderState['complete']
+                    ))->getSize();
 
-                if ($orderState == $stateComplete) {
-                    $completedOrders = Mage::getModel('sales/order')
-                        ->getCollection()
-                        ->addAttributeToFilter('status', array(
-                            'eq' => $stateComplete
-                        ))->getSize();
-
-                    $helper->track('account-attribute', array(
-                        'CompletedOrders' => $completedOrders
-                    ));
-                }
+                $helper->track('account-attribute', array(
+                    'CompletedOrders' => $completedOrders
+                ));
 
                 break;
-            case $helper->isTrackerEnabled('canceled_orders'):
-                $stateCanceled = Mage_Sales_Model_Order::STATE_CANCELED;
-                $orderState    = $observer->getOrder()->getState();
+            case $helper->isTrackerEnabled('canceled_orders')
+                && $currentOrderState == $orderState['canceled']:
+                $canceledOrders = Mage::getModel('sales/order')
+                    ->getCollection()
+                    ->addAttributeToFilter('status', array(
+                        'eq' => $orderState['canceled']
+                    ))->getSize();
 
-                if ($orderState == $stateCanceled) {
-                    $canceledOrders = Mage::getModel('sales/order')
-                        ->getCollection()
-                        ->addAttributeToFilter('status', array(
-                            'eq' => $stateCanceled
-                        ))->getSize();
-
-                    $helper->track('account-attribute', array(
-                        'CanceledOrders' => $canceledOrders
-                    ));
-                }
+                $helper->track('account-attribute', array(
+                    'CanceledOrders' => $canceledOrders
+                ));
 
                 break;
         }
