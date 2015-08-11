@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @category    Shopgo
- * @package     Shopgo_Core
+ * @package     Shopgo_Totango
  * @copyright   Copyright (c) 2015 Shopgo. (http://www.shopgo.me)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -20,7 +20,7 @@
  * Data helper
  *
  * @category    Shopgo
- * @package     Shopgo_Core
+ * @package     Shopgo_Totango
  * @authors     Ammar <ammar@shopgo.me>
  *              Emad  <emad@shopgo.me>
  *              Ahmad <ahmadalkaid@shopgo.me>
@@ -80,9 +80,20 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     private static $_trackers = array(
         'product', 'category', 'attribute',
-        'shipping_payment', 'order', 'admin_login'
+        'shipping_payment', 'completed_orders', 'canceled_orders',
+        'admin_login'
     );
 
+
+    /**
+     * Get a list of predefined trackers
+     *
+     * @return array
+     */
+    public static function getTrackers()
+    {
+        return self::$_trackers;
+    }
 
     /**
      * Check whether the extension is enabled or not
@@ -116,16 +127,6 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         return $result;
-    }
-
-    /**
-     * Get a list of predefined trackers
-     *
-     * @return array
-     */
-    public static function getTrackers()
-    {
-        return self::$_trackers;
     }
 
     /**
