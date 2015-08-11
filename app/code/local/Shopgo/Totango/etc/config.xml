@@ -43,7 +43,7 @@
                     <sales_order_save_after_handler>
                         <type>singleton</type>
                         <class>totango/observer</class>
-                        <method>PostOrderData</method>
+                        <method>trackOrderStatus</method>
                     </sales_order_save_after_handler>
                 </observers>
             </sales_order_save_after>
@@ -56,8 +56,8 @@
                 <category>1</category>
                 <attribute>1</attribute>
                 <shipping_payment>1</shipping_payment>
-                <complete_order>1</complete_order>
-                <canceled_order>1</canceled_order>
+                <completed_orders>1</completed_orders>
+                <canceled_orders>1</canceled_orders>
                 <admin_login>1</admin_login>
             </trackers>
         </shopgo_totango>
