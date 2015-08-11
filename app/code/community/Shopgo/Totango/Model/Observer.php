@@ -38,15 +38,15 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        $currentOrderState = $observer->getOrder()->getState();
-        $orderState = array(
+        $orderState  = $observer->getOrder()->getState();
+        $orderStates = array(
             'complete' => Mage_Sales_Model_Order::STATE_COMPLETE,
             'canceled' => Mage_Sales_Model_Order::STATE_CANCELED
         );
 
         switch (true) {
             case $helper->isTrackerEnabled('complete_orders')
-                && $currentOrderState == $orderState['complete']:
+                && $orderState == $orderStates['complete']:
                 $completeOrders = Mage::getModel('sales/order')
                     ->getCollection()
                     ->addAttributeToFilter('status', array(
@@ -59,7 +59,7 @@ class Shopgo_Totango_Model_Observer
 
                 break;
             case $helper->isTrackerEnabled('canceled_orders')
-                && $currentOrderState == $orderState['canceled']:
+                && $orderState == $orderStates['canceled']:
                 $canceledOrders = Mage::getModel('sales/order')
                     ->getCollection()
                     ->addAttributeToFilter('status', array(
