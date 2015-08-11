@@ -204,7 +204,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 break;
         }
 
-        return $result ? $this->sendRequest($params) : $result;
+        return $result ? $this->_sendRequest($params) : $result;
     }
 
     /**
@@ -213,7 +213,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      * @param array $params
      * @return bool
      */
-    public function sendRequest($params)
+    private function _sendRequest($params)
     {
         $result = false;
 
