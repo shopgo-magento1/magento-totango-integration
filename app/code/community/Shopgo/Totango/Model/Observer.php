@@ -43,13 +43,13 @@ class Shopgo_Totango_Model_Observer
                 $stateComplete = Mage_Sales_Model_Order::STATE_COMPLETE;
                 $orderState    = $observer->getOrder()->getState();
 
-                $completedOrders = Mage::getModel('sales/order')
-                    ->getCollection()
-                    ->addAttributeToFilter('status', array(
-                        'eq' => $stateComplete
-                    ))->getSize();
-
                 if ($orderState == $stateComplete) {
+                    $completedOrders = Mage::getModel('sales/order')
+                        ->getCollection()
+                        ->addAttributeToFilter('status', array(
+                            'eq' => $stateComplete
+                        ))->getSize();
+
                     $helper->track('account-attribute', array(
                         'CompletedOrders' => $completedOrders
                     ));
@@ -60,13 +60,13 @@ class Shopgo_Totango_Model_Observer
                 $stateCanceled = Mage_Sales_Model_Order::STATE_CANCELED;
                 $orderState    = $observer->getOrder()->getState();
 
-                $canceledOrders = Mage::getModel('sales/order')
-                    ->getCollection()
-                    ->addAttributeToFilter('status', array(
-                        'eq' => $stateCanceled
-                    ))->getSize();
-
                 if ($orderState == $stateCanceled) {
+                    $canceledOrders = Mage::getModel('sales/order')
+                        ->getCollection()
+                        ->addAttributeToFilter('status', array(
+                            'eq' => $stateCanceled
+                        ))->getSize();
+
                     $helper->track('account-attribute', array(
                         'CanceledOrders' => $canceledOrders
                     ));
