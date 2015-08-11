@@ -210,7 +210,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      * Send request to Totango
      *
      * @param array $params
-     * @return string|bool
+     * @return bool
      */
     public function sendRequest($params)
     {
