@@ -45,16 +45,16 @@ class Shopgo_Totango_Model_Observer
         );
 
         switch (true) {
-            case $helper->isTrackerEnabled('completed_orders')
+            case $helper->isTrackerEnabled('complete_orders')
                 && $currentOrderState == $orderState['complete']:
-                $completedOrders = Mage::getModel('sales/order')
+                $completeOrders = Mage::getModel('sales/order')
                     ->getCollection()
                     ->addAttributeToFilter('status', array(
                         'eq' => $orderState['complete']
                     ))->getSize();
 
                 $helper->track('account-attribute', array(
-                    'CompletedOrders' => $completedOrders
+                    'CompleteOrders' => $completeOrders
                 ));
 
                 break;
