@@ -24,7 +24,7 @@
     <modules>
         <Shopgo_Totango>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
             <depends>
                 <Shopgo_Core/>
             </depends>
