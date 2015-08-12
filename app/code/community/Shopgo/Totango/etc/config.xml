@@ -56,7 +56,7 @@
                 <category>1</category>
                 <attribute>1</attribute>
                 <shipping_payment>1</shipping_payment>
-                <completed_orders>1</completed_orders>
+                <complete_orders>1</complete_orders>
                 <canceled_orders>1</canceled_orders>
                 <admin_login>1</admin_login>
             </trackers>
