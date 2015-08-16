@@ -161,7 +161,7 @@ class Shopgo_Totango_Model_Observer
                 ));
 
                 $helper->track('account-attribute', array(
-                    'Number of Catalog Attributes' => $attributesCount + 1
+                    'Number of Catalog Attributes' => $attributesCount
                 ));
             }
         }
