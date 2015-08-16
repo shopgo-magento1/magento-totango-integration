@@ -69,7 +69,7 @@ class Shopgo_Totango_Model_Observer
     }
 
     /**
-    * Track new added catalog products
+    * Track newly added catalog products
     *
     * @param Varien_Event_Observer $observer
     * @return null
@@ -103,7 +103,7 @@ class Shopgo_Totango_Model_Observer
     }
 
     /**
-    * Track new added catalog categories
+    * Track newly added catalog categories
     *
     * @param Varien_Event_Observer $observer
     * @return null
@@ -135,7 +135,7 @@ class Shopgo_Totango_Model_Observer
     }
 
     /**
-    * Track new added catalog attributes
+    * Track newly added catalog attributes
     *
     * @param Varien_Event_Observer $observer
     * @return null
