@@ -67,4 +67,89 @@ class Shopgo_Totango_Model_Observer
             }
         }
     }
+
+    /**
+    * Track Catalog "Product" records
+    *
+    * @param Varien_Event_Observer $observer
+    * @return null
+    */
+    public function trackNewProduct(Varien_Event_Observer $observer)
+    {
+        $helper = Mage::helper('totango');
+
+        if ($helper->isTrackerEnabled("product")) {
+            $product   = $observer->getProduct();
+            $isProduct = Mage::getModel('catalog/product')
+                        ->getCollection()
+                        ->addFieldToFilter('entity_id', $product->getId())
+                        ->getFirstItem();
+            
+            if (!$isProduct->getId()) {
+                $helper->track('user-activity', array(
+                    'action' => 'NewProduct',
+                    'module' => "Catalog"
+                ));
+                $helper->track('account-attribute', array(
+                    'Products' => 100
+                ));
+            }
+        }
+    }
+ 
+    /**
+    * Track Catalog "Category" records
+    *
+    * @return null
+    */
+    public function trackNewCategory(Varien_Event_Observer $observer)
+    {
+        $helper = Mage::helper('totango');
+
+        if ($helper->isTrackerEnabled("category")) {
+            $categoryId     = $observer->getEvent()->getCategory()->getId();
+            $allCategoryIds = Mage::getModel('catalog/category')
+                              ->getCollection()
+                              ->getAllIds();
+            
+            if (!in_array($categoryId, $allCategoryIds)){
+                $helper->track('user-activity', array(
+                    'action' => 'NewCategory',
+                    'module' => 'Catalog'
+                ));
+                $helper->track('account-attribute', array(
+                    'Categories' => 100
+                ));
+            }
+        }
+    }
+
+    /**
+    * Track Catalog "Attribute" records
+    *
+    * @param Varien_Event_Observer $observer
+    * @return null
+    */
+    public function trackNewAttribute(Varien_Event_Observer $observer)
+    {
+        $helper = Mage::helper('totango');
+
+        if ($helper->isTrackerEnabled("attribute"))
+        {
+            $attributeId = $observer->getEvent()->getAttribute()->getId();
+            $isAttribute = Mage::getModel('eav/entity_attribute')
+                           ->load($attributeId)
+                           ->getAttributeCode();
+
+            if (!$isAttribute) {
+                $helper->track('user-activity', array(
+                    'action' => 'NewAttribute',
+                    'module' => 'Catalog'
+                ));
+                $helper->track('account-attribute', array(
+                    'Attributes' => 100
+                ));
+            }
+        }
+    }
 }

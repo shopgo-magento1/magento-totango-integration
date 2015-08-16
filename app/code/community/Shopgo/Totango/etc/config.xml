@@ -47,6 +47,33 @@
                     </sales_order_save_after_handler>
                 </observers>
             </sales_order_save_after>
+            <catalog_product_save_before>
+                <observers>
+                    <Shopgo_Totango_Model_Observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackNewProduct</method>
+                    </Shopgo_Totango_Model_Observer>
+                </observers>
+            </catalog_product_save_before>
+            <catalog_category_prepare_save>
+                <observers>
+                    <Shopgo_Totango_Model_Observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackNewCategory</method>
+                    </Shopgo_Totango_Model_Observer>
+                </observers>
+            </catalog_category_prepare_save>   
+            <catalog_entity_attribute_save_before>
+                <observers>
+                    <Shopgo_Totango_Model_Observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackNewAttribute</method>
+                    </Shopgo_Totango_Model_Observer>
+                </observers>
+            </catalog_entity_attribute_save_before> 
         </events>
     </global>
     <default>
