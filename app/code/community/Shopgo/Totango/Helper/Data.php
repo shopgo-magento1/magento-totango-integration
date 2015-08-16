@@ -34,34 +34,16 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     const SERVICE_URL = 'https://sdr.totango.com/pixel.gif/';
 
     /**
-     * CONFIG path constant: ENABLED
+     * General config paths
      */
-    const XML_PATH_TOTANGO_GENERAL_ENABLED = 'shopgo_totango/general/enabled';
-
-
-    /**
-     * CONFIG path constant: SERVICE_ID
-     */
+    const XML_PATH_TOTANGO_GENERAL_ENABLED      = 'shopgo_totango/general/enabled';
     const XML_PATH_TOTANGO_GENERAL_SERVICE_ID   = 'shopgo_totango/general/service_id';
-
-    /**
-     * CONFIG path constant: ACCOUNT_ID
-     */
     const XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID   = 'shopgo_totango/general/account_id';
-
-    /**
-     * CONFIG path constant: ACCOUNT_NAME
-     */
     const XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME = 'shopgo_totango/general/account_name';
-
-    /**
-     * CONFIG path constant: USER_ID
-     */
     const XML_PATH_TOTANGO_GENERAL_USER_ID      = 'shopgo_totango/general/user_id';
 
-
     /**
-     * CONFIG path constant: TRACKERS
+     * Trackers config path
      */
     const XML_PATH_TOTANGO_TRACKERS = 'shopgo_totango/trackers/';
 
@@ -175,6 +157,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 }
 
                 break;
+
             case 'account-attribute':
                 if (is_array($data)) {
                     foreach ($data as $name => $value) {
@@ -187,6 +170,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 }
 
                 break;
+
             case 'user-attribute':
                 if (is_array($data)) {
                     $params['sdr_u'] =
