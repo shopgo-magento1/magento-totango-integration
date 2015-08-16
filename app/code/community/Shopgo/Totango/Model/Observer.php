@@ -44,11 +44,11 @@ class Shopgo_Totango_Model_Observer
         $orderStates = array(
             Mage_Sales_Model_Order::STATE_COMPLETE => array(
                 'tracker-name'   => 'complete_orders',
-                'attribute-name' => 'CompleteOrders'
+                'attribute-name' => 'Complete Orders'
             ),
             Mage_Sales_Model_Order::STATE_CANCELED => array(
                 'tracker-name'   => 'canceled_orders',
-                'attribute-name' => 'CanceledOrders'
+                'attribute-name' => 'Canceled Orders'
             )
         );
 
@@ -56,10 +56,10 @@ class Shopgo_Totango_Model_Observer
             if ($helper->isTrackerEnabled($data['tracker-name'])
                 && $orderState == $state) {
                 $orders = Mage::getModel('sales/order')
-                    ->getCollection()
-                    ->addAttributeToFilter('status', array(
-                        'eq' => $state
-                    ))->getSize();
+                          ->getCollection()
+                          ->addAttributeToFilter('status', array(
+                              'eq' => $state
+                          ))->getSize();
 
                 $helper->track('account-attribute', array(
                     $data['attribute-name'] => $orders
@@ -69,7 +69,7 @@ class Shopgo_Totango_Model_Observer
     }
 
     /**
-    * Track Catalog "Product" records
+    * Track new added catalog products
     *
     * @param Varien_Event_Observer $observer
     * @return null
@@ -78,54 +78,64 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        if ($helper->isTrackerEnabled("product")) {
+        if ($helper->isTrackerEnabled('product')) {
             $product   = $observer->getProduct();
             $isProduct = Mage::getModel('catalog/product')
-                        ->getCollection()
-                        ->addFieldToFilter('entity_id', $product->getId())
-                        ->getFirstItem();
-            
-            if (!$isProduct->getId()) {
+                         ->getCollection()
+                         ->addFieldToFilter('entity_id', $product->getId())
+                         ->getFirstItem()
+                         ->getId();
+
+            if (!$isProduct) {
+                $productsCount = Mage::getModel('catalog/product')
+                                 ->getCollection()->getSize();
+
                 $helper->track('user-activity', array(
                     'action' => 'NewProduct',
-                    'module' => "Catalog"
+                    'module' => 'Catalog'
                 ));
+
                 $helper->track('account-attribute', array(
-                    'Products' => 100
+                    'Number of Catalog Products' => $productsCount + 1
                 ));
             }
         }
     }
- 
+
     /**
-    * Track Catalog "Category" records
+    * Track new added catalog categories
     *
+    * @param Varien_Event_Observer $observer
     * @return null
     */
     public function trackNewCategory(Varien_Event_Observer $observer)
     {
         $helper = Mage::helper('totango');
 
-        if ($helper->isTrackerEnabled("category")) {
-            $categoryId     = $observer->getEvent()->getCategory()->getId();
-            $allCategoryIds = Mage::getModel('catalog/category')
-                              ->getCollection()
-                              ->getAllIds();
-            
-            if (!in_array($categoryId, $allCategoryIds)){
+        if ($helper->isTrackerEnabled('category')) {
+            $categoryId = $observer->getEvent()->getCategory()->getId();
+            $categories = Mage::getModel('catalog/category')
+                          ->getCollection()
+                          ->getAllIds();
+
+            if (!in_array($categoryId, $categories)) {
+                $categoriesCount = Mage::getModel('catalog/category')
+                                   ->getCollection()->getSize();
+
                 $helper->track('user-activity', array(
                     'action' => 'NewCategory',
                     'module' => 'Catalog'
                 ));
+
                 $helper->track('account-attribute', array(
-                    'Categories' => 100
+                    'Number of Catalog Categories' => $categoriesCount + 1
                 ));
             }
         }
     }
 
     /**
-    * Track Catalog "Attribute" records
+    * Track new added catalog attributes
     *
     * @param Varien_Event_Observer $observer
     * @return null
@@ -134,20 +144,24 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        if ($helper->isTrackerEnabled("attribute"))
-        {
+        if ($helper->isTrackerEnabled('attribute')) {
             $attributeId = $observer->getEvent()->getAttribute()->getId();
             $isAttribute = Mage::getModel('eav/entity_attribute')
                            ->load($attributeId)
                            ->getAttributeCode();
 
             if (!$isAttribute) {
+                $attributesCount =
+                    Mage::getResourceModel('catalog/product_attribute_collection')
+                    ->addVisibleFilter()->getSize();
+
                 $helper->track('user-activity', array(
                     'action' => 'NewAttribute',
                     'module' => 'Catalog'
                 ));
+
                 $helper->track('account-attribute', array(
-                    'Attributes' => 100
+                    'Number of Catalog Attributes' => $attributesCount + 1
                 ));
             }
         }
