@@ -103,10 +103,22 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
 
             if (!$result) {
-                $this->log(sprintf('Tracker "%s" is disabled', $tracker));
+                $this->log(array(
+                    'message' => sprintf(
+                        'Tracker "%s" is disabled',
+                        $tracker
+                    ),
+                    'level' => 5
+                ));
             }
         } else {
-            $this->log(sprintf('Tracker "%s" is invalid', $tracker));
+            $this->log(array(
+                'message' => sprintf(
+                    'Tracker "%s" is invalid',
+                    $tracker
+                ),
+                'level' => 3
+            ));
         }
 
         return $result;
@@ -124,7 +136,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         $result = false;
 
         if (empty($data)) {
-            $this->log('There is no tracking data provided');
+            $this->log(array(
+                'message' => 'There is no tracking data to process',
+                'level'   => 3
+            ));
+
             return $result;
         }
 
@@ -153,7 +169,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
                     $result = true;
                 } else {
-                    $this->log('Insufficient tracking data');
+                    $this->log(array(
+                        'message' => 'Insufficient tracking data',
+                        'level'   => 3
+                    ), '', '', true);
                 }
 
                 break;
@@ -166,7 +185,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
                     $result = true;
                 } else {
-                    $this->log('Insufficient tracking data');
+                    $this->log(array(
+                        'message' => 'Insufficient tracking data',
+                        'level'   => 3
+                    ), '', '', true);
                 }
 
                 break;
@@ -182,7 +204,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
                     $result = true;
                 } else {
-                    $this->log('Insufficient tracking data');
+                    $this->log(array(
+                        'message' => 'Insufficient tracking data',
+                        'level'   => 3
+                    ), '', '', true);
                 }
 
                 break;
@@ -202,7 +227,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         $result = false;
 
         if (empty($params)) {
-            $this->log('Could not send a request with empty parameters');
+            $this->log(array(
+                'message' => 'Could not send a request with empty parameters',
+                'level'   => 3
+            ));
+
             return $result;
         }
 
@@ -220,11 +249,22 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
             if ($response->isSuccessful()) {
                 $result = true;
+                $this->log('"Send Request" response was successful');
             } else {
-                $this->log('"Send Request" response was unsuccessful');
+                $this->log(array(
+                    'message' => '"Send Request" response was unsuccessful',
+                    'level'   => 3
+                ));
             }
         } catch (Exception $e) {
-            $this->log(sprintf('[Send Request Exception]: %s', $e->getMessage()));
+            $this->log(array(
+                'message' => sprintf(
+                    '[Send Request Exception]: %s',
+                    $e->getMessage()
+                ),
+                'level' => 3
+            ));
+
             $this->log($e, 'exception');
         }
 
