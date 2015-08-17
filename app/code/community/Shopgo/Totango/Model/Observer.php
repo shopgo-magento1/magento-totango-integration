@@ -166,4 +166,28 @@ class Shopgo_Totango_Model_Observer
             }
         }
     }
+    
+    /**
+     * Track Admin success login
+     *
+     * @param Varien_Event_Observer $observer
+     * @return null
+     */
+    public function trackAdminSuccess(Varien_Event_Observer $observer)
+    {
+        $helper = Mage::helper('totango');
+        $adminUser =$observer->getUser();
+        if ($helper->isTrackerEnabled("admin_login")){
+            Mage::helper('totango')->track('user-activity', array(
+                'action' => 'AdminSuccess',
+                'module' => 'Admin'
+            ));
+            Mage::helper('totango')->track('account-attribute', array(
+                'Username'  =>  $adminUser->getusername() ,
+                'logindate' =>  $adminUser->getLogdate(),
+                'lognumber' =>  $adminUser->getLognum()
+            ));
+            
+        }
+    }
 }

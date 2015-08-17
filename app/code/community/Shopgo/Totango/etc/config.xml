@@ -38,6 +38,15 @@
             </totango>
         </models>
         <events>
+            <admin_session_user_login_success>
+                <observers>
+                    <Shopgo_Totango_Model_Observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackAdminSuccess</method>
+                    </Shopgo_Totango_Model_Observer>
+                </observers>
+            </admin_session_user_login_success>
             <sales_order_save_after>
                 <observers>
                     <sales_order_save_after_handler>
