@@ -158,18 +158,27 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </admin_login>
+                    </fields>
+                </trackers>
+                <trackers_advanced translate="label" module="totango">
+                    <label>Trackers (Advanced)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
                         <excluded_admin_users translate="label comment">
                             <label>Excluded Admin Users</label>
                             <comment>Comma separated</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>71</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                            <depends><admin_login>1</admin_login></depends>
                         </excluded_admin_users>
                     </fields>
-                </trackers>
+                </trackers_advanced>
             </groups>
         </shopgo_totango>
     </sections>

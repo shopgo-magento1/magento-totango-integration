@@ -29,28 +29,28 @@
 class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 {
     /**
-     * Totango Service URL
+     * Totango service URL
      */
     const SERVICE_URL = 'https://sdr.totango.com/pixel.gif/';
 
     /**
      * General config paths
      */
-    const XML_PATH_TOTANGO_GENERAL_ENABLED      = 'shopgo_totango/general/enabled';
-    const XML_PATH_TOTANGO_GENERAL_SERVICE_ID   = 'shopgo_totango/general/service_id';
-    const XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID   = 'shopgo_totango/general/account_id';
-    const XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME = 'shopgo_totango/general/account_name';
-    const XML_PATH_TOTANGO_GENERAL_USER_ID      = 'shopgo_totango/general/user_id';
+    const XML_PATH_GENERAL_ENABLED      = 'shopgo_totango/general/enabled';
+    const XML_PATH_GENERAL_SERVICE_ID   = 'shopgo_totango/general/service_id';
+    const XML_PATH_GENERAL_ACCOUNT_ID   = 'shopgo_totango/general/account_id';
+    const XML_PATH_GENERAL_ACCOUNT_NAME = 'shopgo_totango/general/account_name';
+    const XML_PATH_GENERAL_USER_ID      = 'shopgo_totango/general/user_id';
 
     /**
      * Trackers config path
      */
-    const XML_PATH_TOTANGO_TRACKERS = 'shopgo_totango/trackers/';
+    const XML_PATH_TRACKERS = 'shopgo_totango/trackers/';
 
     /**
-     * Excluded admin users config field name
+     * Trackers advanced excluded admin users config path
      */
-    const CONFIG_FIELD_EXCLUDED_ADMIN_USERS = 'excluded_admin_users';
+    const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'shopgo_totango/trackers_advanced/excluded_admin_users';
 
 
     /**
@@ -90,7 +90,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     public function isEnabled()
     {
-        return Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ENABLED);
+        return Mage::getStoreConfig(self::XML_PATH_GENERAL_ENABLED);
     }
 
     /**
@@ -105,7 +105,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         if (in_array($tracker, self::getTrackers())) {
             $result =
-                Mage::getStoreConfig(self::XML_PATH_TOTANGO_TRACKERS . $tracker);
+                Mage::getStoreConfig(self::XML_PATH_TRACKERS . $tracker);
 
             if (!$result) {
                 $this->log(array(
@@ -137,10 +137,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     public function getExcludedAdminUsers()
     {
         $excludedAdminUsers =
-            Mage::getStoreConfig(
-                self::XML_PATH_TOTANGO_TRACKERS .
-                self::CONFIG_FIELD_EXCLUDED_ADMIN_USERS
-            );
+            Mage::getStoreConfig(self::XML_PATH_TRACKERS_ADV_EXC_ADMIN);
 
         return array_map('trim', explode(',', $excludedAdminUsers));
     }
@@ -167,9 +164,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         $params = array(
             'sdr_s' =>
-                Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_SERVICE_ID),
+                Mage::getStoreConfig(self::XML_PATH_GENERAL_SERVICE_ID),
             'sdr_o' =>
-                Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID)
+                Mage::getStoreConfig(self::XML_PATH_GENERAL_ACCOUNT_ID)
         );
 
         if (empty($params['sdr_s']) || empty($params['sdr_o'])) {
@@ -182,7 +179,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         $accountName =
-            Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME);
+            Mage::getStoreConfig(self::XML_PATH_GENERAL_ACCOUNT_NAME);
 
         if ($accountName) {
             $params['sdr_odn'] = $accountName;
@@ -192,7 +189,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             case 'user-activity':
                 if (isset($data['action']) && isset($data['module'])) {
                     $params['sdr_u'] =
-                        Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
+                        Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
 
                     $params['sdr_a'] = $data['action'];
                     $params['sdr_m'] = $data['module'];
@@ -226,7 +223,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             case 'user-attribute':
                 if (is_array($data)) {
                     $params['sdr_u'] =
-                        Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_USER_ID);
+                        Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
 
                     foreach ($data as $name => $value) {
                         $params["sdr_u.{$name}"] = $value;
