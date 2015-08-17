@@ -186,7 +186,7 @@ class Shopgo_Totango_Model_Observer
             ));
 
             $helper->track('account-attribute', array(
-                'Admin Username' => $adminUser->getUsername(),
+                'Admin User Name' => $adminUser->getUsername(),
                 'Admin Last Login Time' => $adminUser->getLogdate(),
                 'Admin Login Number'    => $adminUser->getLognum()
             ));
