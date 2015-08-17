@@ -52,7 +52,7 @@ class Shopgo_Totango_Model_Observer
             )
         );
 
-        $helper->log('Track %s order', $orderState);
+        $helper->log(sprintf('Track %s order', $orderState));
 
         foreach ($orderStates as $state => $data) {
             if ($helper->isTrackerEnabled($data['tracker-name'])
