@@ -52,6 +52,8 @@ class Shopgo_Totango_Model_Observer
             )
         );
 
+        $helper->log('Track %s order', $orderState);
+
         foreach ($orderStates as $state => $data) {
             if ($helper->isTrackerEnabled($data['tracker-name'])
                 && $orderState == $state) {
@@ -77,6 +79,8 @@ class Shopgo_Totango_Model_Observer
     public function trackNewProduct(Varien_Event_Observer $observer)
     {
         $helper = Mage::helper('totango');
+
+        $helper->log('Track new catalog product');
 
         if ($helper->isTrackerEnabled('product')) {
             $product   = $observer->getProduct();
@@ -112,6 +116,8 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
+        $helper->log('Track new catalog category');
+
         if ($helper->isTrackerEnabled('category')) {
             $categoryId = $observer->getEvent()->getCategory()->getId();
             $categories = Mage::getModel('catalog/category')
@@ -143,6 +149,8 @@ class Shopgo_Totango_Model_Observer
     public function trackNewAttribute(Varien_Event_Observer $observer)
     {
         $helper = Mage::helper('totango');
+
+        $helper->log('Track new catalog attribute');
 
         if ($helper->isTrackerEnabled('attribute')) {
             $attributeId = $observer->getEvent()->getAttribute()->getId();
@@ -177,23 +185,26 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        $adminUser     = $observer->getUser();
-        $adminUsername = $adminUser->getUsername();
+        $helper->log('Track successful admin user login');
 
-        $excludedAdminUsers = $helper->getExcludedAdminUsers();
+        if ($helper->isTrackerEnabled('admin_login')) {
+            $adminUser     = $observer->getUser();
+            $adminUsername = $adminUser->getUsername();
 
-        if ($helper->isTrackerEnabled('admin_login')
-            && !in_array($adminUsername, $excludedAdminUsers)) {
-            $helper->track('user-activity', array(
-                'action' => 'AdminLogin',
-                'module' => 'Admin'
-            ));
+            $excludedAdminUsers = $helper->getExcludedAdminUsers();
 
-            $helper->track('account-attribute', array(
-                'Admin User Name' => $adminUser->getUsername(),
-                'Admin Last Login Time' => $adminUser->getLogdate(),
-                'Admin Login Number'    => $adminUser->getLognum()
-            ));
+            if (!in_array($adminUsername, $excludedAdminUsers)) {
+                $helper->track('user-activity', array(
+                    'action' => 'AdminLogin',
+                    'module' => 'Admin'
+                ));
+
+                $helper->track('account-attribute', array(
+                    'Admin User Name' => $adminUser->getUsername(),
+                    'Admin Last Login Time' => $adminUser->getLogdate(),
+                    'Admin Login Number'    => $adminUser->getLognum()
+                ));
+            }
         }
     }
 }

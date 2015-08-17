@@ -153,6 +153,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     {
         $result = false;
 
+        $this->log(sprintf('Track Totango %s event', $event));
+
         if (empty($data)) {
             $this->log(array(
                 'message' => 'There is no tracking data to process',
