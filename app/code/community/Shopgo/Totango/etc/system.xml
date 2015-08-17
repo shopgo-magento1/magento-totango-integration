@@ -28,7 +28,7 @@
         </shopgo>
     </tabs>
     <sections>
-        <shopgo_totango translate="label" module="totango">
+        <totango translate="label" module="totango">
             <label>Totango</label>
             <tab>shopgo</tab>
             <sort_order>100</sort_order>
@@ -180,6 +180,6 @@
                     </fields>
                 </trackers_advanced>
             </groups>
-        </shopgo_totango>
+        </totango>
     </sections>
 </config>

@@ -32,9 +32,9 @@
                         <children>
                             <config>
                                 <children>
-                                    <shopgo_totango translate="title" module="totango">
-                                        <title>ShopGo Totango</title>
-                                    </shopgo_totango>
+                                    <totango translate="title" module="totango">
+                                        <title>Totango</title>
+                                    </totango>
                                 </children>
                             </config>
                         </children>

@@ -36,21 +36,21 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     /**
      * General config paths
      */
-    const XML_PATH_GENERAL_ENABLED      = 'shopgo_totango/general/enabled';
-    const XML_PATH_GENERAL_SERVICE_ID   = 'shopgo_totango/general/service_id';
-    const XML_PATH_GENERAL_ACCOUNT_ID   = 'shopgo_totango/general/account_id';
-    const XML_PATH_GENERAL_ACCOUNT_NAME = 'shopgo_totango/general/account_name';
-    const XML_PATH_GENERAL_USER_ID      = 'shopgo_totango/general/user_id';
+    const XML_PATH_GENERAL_ENABLED      = 'totango/general/enabled';
+    const XML_PATH_GENERAL_SERVICE_ID   = 'totango/general/service_id';
+    const XML_PATH_GENERAL_ACCOUNT_ID   = 'totango/general/account_id';
+    const XML_PATH_GENERAL_ACCOUNT_NAME = 'totango/general/account_name';
+    const XML_PATH_GENERAL_USER_ID      = 'totango/general/user_id';
 
     /**
      * Trackers config path
      */
-    const XML_PATH_TRACKERS = 'shopgo_totango/trackers/';
+    const XML_PATH_TRACKERS = 'totango/trackers/';
 
     /**
      * Trackers advanced excluded admin users config path
      */
-    const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'shopgo_totango/trackers_advanced/excluded_admin_users';
+    const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'totango/trackers_advanced/excluded_admin_users';
 
 
     /**
@@ -58,7 +58,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      *
      * @var string
      */
-    protected $_logFile = 'shopgo_totango.log';
+    protected $_logFile = 'totango.log';
 
     /**
      * Trackers names
