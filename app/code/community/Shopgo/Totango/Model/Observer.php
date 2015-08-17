@@ -194,7 +194,6 @@ class Shopgo_Totango_Model_Observer
                 'Admin Last Login Time' => $adminUser->getLogdate(),
                 'Admin Login Number'    => $adminUser->getLognum()
             ));
-
         }
     }
 }
