@@ -151,6 +151,15 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_ID)
         );
 
+        if (empty($params['sdr_s']) || empty($params['sdr_o'])) {
+            $this->log(array(
+                'message' => 'Insufficient tracking data',
+                'level'   => 3
+            ), '', '', true);
+
+            return $result;
+        }
+
         $accountName =
             Mage::getStoreConfig(self::XML_PATH_TOTANGO_GENERAL_ACCOUNT_NAME);
 
