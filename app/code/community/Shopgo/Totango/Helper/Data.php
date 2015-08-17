@@ -47,6 +47,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     const XML_PATH_TOTANGO_TRACKERS = 'shopgo_totango/trackers/';
 
+    /**
+     * Excluded admin users config field name
+     */
+    const CONFIG_FIELD_EXCLUDED_ADMIN_USERS = 'excluded_admin_users';
+
 
     /**
      * Log file name
@@ -122,6 +127,22 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         return $result;
+    }
+
+    /**
+     * Get a list of of admin users to be excluded from tracking
+     *
+     * @return array
+     */
+    public function getExcludedAdminUsers()
+    {
+        $excludedAdminUsers =
+            Mage::getStoreConfig(
+                self::XML_PATH_TOTANGO_TRACKERS .
+                self::CONFIG_FIELD_EXCLUDED_ADMIN_USERS
+            );
+
+        return array_map('trim', explode(',', $excludedAdminUsers));
     }
 
     /**

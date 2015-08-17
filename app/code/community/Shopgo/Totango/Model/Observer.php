@@ -177,9 +177,13 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        if ($helper->isTrackerEnabled('admin_login')) {
-            $adminUser = $observer->getUser();
+        $adminUser     = $observer->getUser();
+        $adminUsername = $adminUser->getUsername();
 
+        $excludedAdminUsers = $helper->getExcludedAdminUsers();
+
+        if ($helper->isTrackerEnabled('admin_login')
+            && !in_array($adminUsername, $excludedAdminUsers)) {
             $helper->track('user-activity', array(
                 'action' => 'AdminLogin',
                 'module' => 'Admin'
