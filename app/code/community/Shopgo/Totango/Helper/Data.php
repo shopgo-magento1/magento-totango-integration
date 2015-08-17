@@ -253,6 +253,12 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     {
         $result = false;
 
+        $this->log(array(
+            array('message' => 'Totango service call, start...'),
+            array('message' => sprintf('Totango service URL: %s', $url)),
+            array('message' => array('request_params' => $params))
+        ));
+
         if (empty($params)) {
             $this->log(array(
                 'message' => 'Could not send a request with empty parameters',
@@ -264,8 +270,6 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         $url        = self::SERVICE_URL;
         $httpClient = new Varien_Http_Client();
-
-        $this->log($params);
 
         try {
             $response = $httpClient
