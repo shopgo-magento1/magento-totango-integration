@@ -38,51 +38,51 @@
             </totango>
         </models>
         <events>
-            <admin_session_user_login_success>
-                <observers>
-                    <Shopgo_Totango_Model_Observer>
-                        <type>singleton</type>
-                        <class>totango/observer</class>
-                        <method>trackAdminSuccess</method>
-                    </Shopgo_Totango_Model_Observer>
-                </observers>
-            </admin_session_user_login_success>
-            <sales_order_save_after>
-                <observers>
-                    <sales_order_save_after_handler>
-                        <type>singleton</type>
-                        <class>totango/observer</class>
-                        <method>trackOrderStatus</method>
-                    </sales_order_save_after_handler>
-                </observers>
-            </sales_order_save_after>
             <catalog_product_save_before>
                 <observers>
-                    <Shopgo_Totango_Model_Observer>
+                    <catalog_product_save_before_observer>
                         <type>singleton</type>
                         <class>totango/observer</class>
                         <method>trackNewProduct</method>
-                    </Shopgo_Totango_Model_Observer>
+                    </catalog_product_save_before_observer>
                 </observers>
             </catalog_product_save_before>
             <catalog_category_prepare_save>
                 <observers>
-                    <Shopgo_Totango_Model_Observer>
+                    <catalog_category_prepare_save_observer>
                         <type>singleton</type>
                         <class>totango/observer</class>
                         <method>trackNewCategory</method>
-                    </Shopgo_Totango_Model_Observer>
+                    </catalog_category_prepare_save_observer>
                 </observers>
-            </catalog_category_prepare_save>   
+            </catalog_category_prepare_save>
             <catalog_entity_attribute_save_before>
                 <observers>
-                    <Shopgo_Totango_Model_Observer>
+                    <catalog_entity_attribute_save_before_observer>
                         <type>singleton</type>
                         <class>totango/observer</class>
                         <method>trackNewAttribute</method>
-                    </Shopgo_Totango_Model_Observer>
+                    </catalog_entity_attribute_save_before_observer>
                 </observers>
-            </catalog_entity_attribute_save_before> 
+            </catalog_entity_attribute_save_before>
+            <sales_order_save_after>
+                <observers>
+                    <sales_order_save_after_observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackOrderStatus</method>
+                    </sales_order_save_after_observer>
+                </observers>
+            </sales_order_save_after>
+            <admin_session_user_login_success>
+                <observers>
+                    <admin_session_user_login_success_observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackAdminSuccessfulLogin</method>
+                    </admin_session_user_login_success_observer>
+                </observers>
+            </admin_session_user_login_success>
         </events>
     </global>
     <default>
