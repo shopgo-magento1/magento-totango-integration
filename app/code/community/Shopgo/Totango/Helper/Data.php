@@ -119,8 +119,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         $result = false;
 
         if (in_array($tracker, self::getTrackers())) {
-            $result =
-                $this->getConfig(self::XML_PATH_TRACKERS . $tracker);
+            $result = $this->getConfig(
+                self::XML_PATH_TRACKERS . $tracker
+            );
 
             if (!$result) {
                 $this->log(array(
@@ -180,8 +181,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     public function getExcludedAdminUsers()
     {
-        $excludedAdminUsers =
-            $this->getConfig(self::XML_PATH_TRACKERS_ADV_EXC_ADMIN);
+        $excludedAdminUsers = $this->getConfig(
+            self::XML_PATH_TRACKERS_ADV_EXC_ADMIN
+        );
 
         return array_map('trim', explode(',', $excludedAdminUsers));
     }
@@ -215,10 +217,12 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         $params = array(
-            'sdr_s' =>
-                $this->getConfig(self::XML_PATH_GENERAL_SERVICE_ID),
-            'sdr_o' =>
-                $this->getConfig(self::XML_PATH_GENERAL_ACCOUNT_ID)
+            'sdr_s' => $this->getConfig(
+                self::XML_PATH_GENERAL_SERVICE_ID
+            ),
+            'sdr_o' => $this->getConfig(
+                self::XML_PATH_GENERAL_ACCOUNT_ID
+            )
         );
 
         if (empty($params['sdr_s']) || empty($params['sdr_o'])) {
@@ -230,8 +234,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             return $canSend;
         }
 
-        $accountName =
-            $this->getConfig(self::XML_PATH_GENERAL_ACCOUNT_NAME);
+        $accountName = $this->getConfig(
+            self::XML_PATH_GENERAL_ACCOUNT_NAME
+        );
 
         if ($accountName) {
             $params['sdr_odn'] = $accountName;
@@ -241,8 +246,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             switch ($event) {
                 case 'user-activity':
                     if (isset($_data['action']) && isset($_data['module'])) {
-                        $params['sdr_u'] =
-                            $this->getConfig(self::XML_PATH_GENERAL_USER_ID);
+                        $params['sdr_u'] = $this->getConfig(
+                            self::XML_PATH_GENERAL_USER_ID
+                        );
 
                         $params['sdr_a'] = $_data['action'];
                         $params['sdr_m'] = $_data['module'];
@@ -285,8 +291,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
                 case 'user-attribute':
                     if (is_array($_data) && !empty($_data)) {
-                        $params['sdr_u'] =
-                            $this->getConfig(self::XML_PATH_GENERAL_USER_ID);
+                        $params['sdr_u'] = $this->getConfig(
+                            self::XML_PATH_GENERAL_USER_ID
+                        );
 
                         foreach ($_data as $name => $value) {
                             $params["sdr_u.{$name}"] = $value;

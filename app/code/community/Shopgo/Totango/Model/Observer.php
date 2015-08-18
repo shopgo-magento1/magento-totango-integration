@@ -163,9 +163,8 @@ class Shopgo_Totango_Model_Observer
                            ->getAttributeCode();
 
             if (!$isAttribute) {
-                $attributesCount =
-                    Mage::getResourceModel('catalog/product_attribute_collection')
-                    ->addVisibleFilter()->getSize();
+                $attributesCount = Mage::getResourceModel('catalog/product_attribute_collection')
+                                   ->addVisibleFilter()->getSize();
 
                 $helper->track(array(
                     'user-activity' => array(
