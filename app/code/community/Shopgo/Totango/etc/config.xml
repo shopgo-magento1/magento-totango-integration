@@ -86,7 +86,7 @@
         </events>
     </global>
     <default>
-        <shopgo_totango>
+        <totango>
             <trackers>
                 <product>1</product>
                 <category>1</category>
@@ -96,6 +96,6 @@
                 <canceled_orders>1</canceled_orders>
                 <admin_login>1</admin_login>
             </trackers>
-        </shopgo_totango>
+        </totango>
     </default>
 </config>
