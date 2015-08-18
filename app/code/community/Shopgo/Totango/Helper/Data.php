@@ -282,17 +282,21 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
             if ($response->isSuccessful()) {
                 $result = true;
-                $this->log('"Send Request" response was successful');
+                $this->log(
+                    'Totango request was sent successfully ' .
+                    '(A successful response does not mean that ' .
+                    'it was received correctly by Totango. So, be careful)'
+                );
             } else {
                 $this->log(array(
-                    'message' => '"Send Request" response was unsuccessful',
+                    'message' => 'Totango sent request response was unsuccessful',
                     'level'   => 3
                 ));
             }
         } catch (Exception $e) {
             $this->log(array(
                 'message' => sprintf(
-                    '[Send Request Exception]: %s',
+                    '[Totango Request Send Exception]: %s',
                     $e->getMessage()
                 ),
                 'level' => 3
