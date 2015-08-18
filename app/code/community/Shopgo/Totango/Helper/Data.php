@@ -145,15 +145,21 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     /**
      * Log data user-activity event or attribute-updates
      *
-     * @param string $event
      * @param array $data
      * @return bool
      */
-    public function track($event, $data)
+    public function track($data)
     {
-        $result = false;
+        $canSend = false;
 
-        $this->log(sprintf('Track Totango %s event', $event));
+        $events      = array_keys($data);
+        $multiEvents = count($events) > 1 ? 's' : '';
+        $events      = implode(', ', $events);
+
+        $this->log(sprintf(
+            'Track Totango %s event%s',
+            $events, $multiEvents
+        ));
 
         if (empty($data)) {
             $this->log(array(
@@ -161,7 +167,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 'level'   => 3
             ));
 
-            return $result;
+            return $canSend;
         }
 
         $params = array(
@@ -175,9 +181,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             $this->log(array(
                 'message' => 'Insufficient tracking data',
                 'level'   => 3
-            ), '', '', true);
+            ));
 
-            return $result;
+            return $canSend;
         }
 
         $accountName =
@@ -187,62 +193,99 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             $params['sdr_odn'] = $accountName;
         }
 
-        switch ($event) {
-            case 'user-activity':
-                if (isset($data['action']) && isset($data['module'])) {
-                    $params['sdr_u'] =
-                        Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
+        foreach ($data as $event => $_data) {
+            switch ($event) {
+                case 'user-activity':
+                    if (isset($_data['action']) && isset($_data['module'])) {
+                        $params['sdr_u'] =
+                            Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
 
-                    $params['sdr_a'] = $data['action'];
-                    $params['sdr_m'] = $data['module'];
+                        $params['sdr_a'] = $_data['action'];
+                        $params['sdr_m'] = $_data['module'];
 
-                    $result = true;
-                } else {
-                    $this->log(array(
-                        'message' => 'Insufficient tracking data',
-                        'level'   => 3
-                    ), '', '', true);
-                }
+                        $canSend = true;
+                    } else {
+                        $canSend = false;
 
-                break;
-
-            case 'account-attribute':
-                if (is_array($data)) {
-                    foreach ($data as $name => $value) {
-                        $params["sdr_o.{$name}"] = $value;
+                        $this->log(array(
+                            'message' => sprintf(
+                                'Insufficient tracking data for %s event',
+                                $event
+                            ),
+                            'level' => 3
+                        ));
                     }
 
-                    $result = true;
-                } else {
-                    $this->log(array(
-                        'message' => 'Insufficient tracking data',
-                        'level'   => 3
-                    ), '', '', true);
-                }
+                    break;
 
-                break;
+                case 'account-attribute':
+                    if (is_array($_data) && !empty($_data)) {
+                        foreach ($_data as $name => $value) {
+                            $params["sdr_o.{$name}"] = $value;
+                        }
 
-            case 'user-attribute':
-                if (is_array($data)) {
-                    $params['sdr_u'] =
-                        Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
+                        $canSend = true;
+                    } else {
+                        $canSend = false;
 
-                    foreach ($data as $name => $value) {
-                        $params["sdr_u.{$name}"] = $value;
+                        $this->log(array(
+                            'message' => sprintf(
+                                'Insufficient tracking data for %s event',
+                                $event
+                            ),
+                            'level' => 3
+                        ));
                     }
 
-                    $result = true;
-                } else {
-                    $this->log(array(
-                        'message' => 'Insufficient tracking data',
-                        'level'   => 3
-                    ), '', '', true);
-                }
+                    break;
 
-                break;
+                case 'user-attribute':
+                    if (is_array($_data) && !empty($_data)) {
+                        $params['sdr_u'] =
+                            Mage::getStoreConfig(self::XML_PATH_GENERAL_USER_ID);
+
+                        foreach ($_data as $name => $value) {
+                            $params["sdr_u.{$name}"] = $value;
+                        }
+
+                        $canSend = true;
+                    } else {
+                        $canSend = false;
+
+                        $this->log(array(
+                            'message' => sprintf(
+                                'Insufficient tracking data for %s event',
+                                $event
+                            ),
+                            'level' => 3
+                        ));
+                    }
+
+                    break;
+
+                default:
+                    $this->log(array(
+                        'message' => sprintf(
+                            'The requested event %s is invalid',
+                            $event
+                        ),
+                        'level' => 3
+                    ));
+            }
         }
 
-        return $result ? $this->_sendRequest($params) : $result;
+        $result = $canSend;
+
+        if ($canSend) {
+            $result = $this->_sendRequest($params);
+        } else {
+            $this->log(array(
+                'message' => 'Could not send a request to Totango',
+                'level'   => 3
+            ));
+        }
+
+        return $result;
     }
 
     /**
@@ -254,9 +297,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     private function _sendRequest($params)
     {
         $result = false;
+        $url    = self::SERVICE_URL;
 
         $this->log(array(
-            array('message' => 'Totango service call, start...'),
+            array('message' => 'Totango service call, Start...'),
             array('message' => sprintf('Totango service URL: %s', $url)),
             array('message' => array('request_params' => $params))
         ));
@@ -270,7 +314,6 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             return $result;
         }
 
-        $url        = self::SERVICE_URL;
         $httpClient = new Varien_Http_Client();
 
         try {
@@ -285,7 +328,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 $this->log(
                     'Totango request was sent successfully ' .
                     '(A successful response does not mean that ' .
-                    'it was received correctly by Totango. So, be careful)'
+                    'it was received correctly by Totango. So, be careful!)'
                 );
             } else {
                 $this->log(array(

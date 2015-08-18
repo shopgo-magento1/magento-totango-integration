@@ -63,8 +63,10 @@ class Shopgo_Totango_Model_Observer
                               'eq' => $state
                           ))->getSize();
 
-                $helper->track('account-attribute', array(
-                    $data['attribute-name'] => $orders
+                $helper->track(array(
+                    'account-attribute' => array(
+                        $data['attribute-name'] => $orders
+                    )
                 ));
             }
         }
@@ -94,13 +96,14 @@ class Shopgo_Totango_Model_Observer
                 $productsCount = Mage::getModel('catalog/product')
                                  ->getCollection()->getSize();
 
-                $helper->track('user-activity', array(
-                    'action' => 'NewProduct',
-                    'module' => 'Catalog'
-                ));
-
-                $helper->track('account-attribute', array(
-                    'Number of Catalog Products' => $productsCount + 1
+                $helper->track(array(
+                    'user-activity' => array(
+                        'action' => 'NewProduct',
+                        'module' => 'Catalog'
+                    ),
+                    'account-attribute' => array(
+                        'Number of Catalog Products' => $productsCount + 1
+                    )
                 ));
             }
         }
@@ -128,13 +131,14 @@ class Shopgo_Totango_Model_Observer
                 $categoriesCount = Mage::getModel('catalog/category')
                                    ->getCollection()->getSize();
 
-                $helper->track('user-activity', array(
-                    'action' => 'NewCategory',
-                    'module' => 'Catalog'
-                ));
-
-                $helper->track('account-attribute', array(
-                    'Number of Catalog Categories' => $categoriesCount + 1
+                $helper->track(array(
+                    'user-activity' => array(
+                        'action' => 'NewCategory',
+                        'module' => 'Catalog'
+                    ),
+                    'account-attribute' => array(
+                        'Number of Catalog Categories' => $categoriesCount + 1
+                    )
                 ));
             }
         }
@@ -163,13 +167,14 @@ class Shopgo_Totango_Model_Observer
                     Mage::getResourceModel('catalog/product_attribute_collection')
                     ->addVisibleFilter()->getSize();
 
-                $helper->track('user-activity', array(
-                    'action' => 'NewAttribute',
-                    'module' => 'Catalog'
-                ));
-
-                $helper->track('account-attribute', array(
-                    'Number of Catalog Attributes' => $attributesCount
+                $helper->track(array(
+                    'user-activity' => array(
+                        'action' => 'NewAttribute',
+                        'module' => 'Catalog'
+                    ),
+                    'account-attribute' => array(
+                        'Number of Catalog Attributes' => $attributesCount
+                    )
                 ));
             }
         }
@@ -194,15 +199,16 @@ class Shopgo_Totango_Model_Observer
             $excludedAdminUsers = $helper->getExcludedAdminUsers();
 
             if (!in_array($adminUsername, $excludedAdminUsers)) {
-                $helper->track('user-activity', array(
-                    'action' => 'AdminLogin',
-                    'module' => 'Admin'
-                ));
-
-                $helper->track('account-attribute', array(
-                    'Admin User Name' => $adminUser->getUsername(),
-                    'Admin Last Login Time' => $adminUser->getLogdate(),
-                    'Admin Login Number'    => $adminUser->getLognum()
+                $helper->track(array(
+                    'user-activity' => array(
+                        'action' => 'AdminLogin',
+                        'module' => 'Admin'
+                    ),
+                    'account-attribute' => array(
+                        'Admin User Name' => $adminUser->getUsername(),
+                        'Admin Last Login Time' => $adminUser->getLogdate(),
+                        'Admin Login Number'    => $adminUser->getLognum()
+                    )
                 ));
             }
         }

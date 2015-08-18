@@ -9,27 +9,55 @@
 
 * Track User-Activity Event:
 ```
-Mage::helper('totango')->track('user-activity', array(
-    'action' => 'MY_ACTION',
-    'module' => 'MY_MODULE'
+Mage::helper('totango')->track(array(
+    'user-activity' => array(
+        'action' => 'MY_ACTION',
+        'module' => 'MY_MODULE'
+    )
 ));
 ```
 * Track Account-Attribute Event:
 ```
-Mage::helper('totango')->track('account-attribute', array(
-    'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
-    'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
-    'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
-    ...
+Mage::helper('totango')->track(array(
+    'account-attribute' => array(
+        'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+        'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+        'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
+        ...
+    )
 ));
 ```
 * Track User-Attribute Event:
 ```
-Mage::helper('totango')->track('user-attribute', array(
-    'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
-    'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
-    'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
-    ...
+Mage::helper('totango')->track(array(
+    'user-attribute' => array(
+        'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+        'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+        'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
+        ...
+    )
+));
+```
+
+* Track Multiple Events:
+```
+Mage::helper('totango')->track(array(
+    'user-activity' => array(
+        'action' => 'MY_ACTION',
+        'module' => 'MY_MODULE'
+    ),
+    'account-attribute' => array(
+        'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+        'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+        'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
+        ...
+    ),
+    'user-attribute' => array(
+        'MY_ATTRIBUTE1_NAME' => 'MY_ATTRIBUTE1_VALUE',
+        'MY_ATTRIBUTE2_NAME' => 'MY_ATTRIBUTE2_VALUE',
+        'MY_ATTRIBUTE3_NAME' => 'MY_ATTRIBUTE3_VALUE',
+        ...
+    )
 ));
 ```
 
