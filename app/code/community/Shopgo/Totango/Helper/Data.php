@@ -110,7 +110,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         if (!$result) {
             $this->log(array(
                 'message' => 'The module is disabled',
-                'level' => 5
+                'level'   => 5
             ));
         }
 

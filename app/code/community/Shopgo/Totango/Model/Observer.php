@@ -54,6 +54,10 @@ class Shopgo_Totango_Model_Observer
 
         $helper->log(sprintf('Track %s order', $orderState));
 
+        if (!$helper->isEnabled()) {
+            return;
+        }
+
         foreach ($orderStates as $state => $data) {
             if ($helper->isTrackerEnabled($data['tracker-name'])
                 && $orderState == $state) {
@@ -83,6 +87,10 @@ class Shopgo_Totango_Model_Observer
         $helper = Mage::helper('totango');
 
         $helper->log('Track new catalog product');
+
+        if (!$helper->isEnabled()) {
+            return;
+        }
 
         if ($helper->isTrackerEnabled('product')) {
             $product   = $observer->getProduct();
@@ -121,6 +129,10 @@ class Shopgo_Totango_Model_Observer
 
         $helper->log('Track new catalog category');
 
+        if (!$helper->isEnabled()) {
+            return;
+        }
+
         if ($helper->isTrackerEnabled('category')) {
             $categoryId = $observer->getEvent()->getCategory()->getId();
             $categories = Mage::getModel('catalog/category')
@@ -156,6 +168,10 @@ class Shopgo_Totango_Model_Observer
 
         $helper->log('Track new catalog attribute');
 
+        if (!$helper->isEnabled()) {
+            return;
+        }
+
         if ($helper->isTrackerEnabled('attribute')) {
             $attributeId = $observer->getEvent()->getAttribute()->getId();
             $isAttribute = Mage::getModel('eav/entity_attribute')
@@ -190,6 +206,10 @@ class Shopgo_Totango_Model_Observer
         $helper = Mage::helper('totango');
 
         $helper->log('Track successful admin user login');
+
+        if (!$helper->isEnabled()) {
+            return;
+        }
 
         if ($helper->isTrackerEnabled('admin_login')) {
             $adminUser     = $observer->getUser();
