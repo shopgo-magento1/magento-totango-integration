@@ -105,7 +105,16 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     public function isEnabled()
     {
-        return $this->getConfig(self::XML_PATH_GENERAL_ENABLED);
+        $result = $this->getConfig(self::XML_PATH_GENERAL_ENABLED);
+
+        if (!$result) {
+            $this->log(array(
+                'message' => 'The module is disabled',
+                'level' => 5
+            ));
+        }
+
+        return $result;
     }
 
     /**
@@ -168,6 +177,12 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 )->asArray();
 
                 if ($persistMode === 1) {
+                    $this->log(array(
+                        'message' => 'Persist config mode is enabled ' .
+                                     '(Magento system configuration value is ignored!)',
+                        'level'   => 5
+                    ));
+
                     return $persistConfig->getNode($path)->asArray();
                 } else {
                     $this->log(array(
