@@ -58,9 +58,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'totango/trackers_advanced/excluded_admin_users';
 
     /**
-     * Persist config file name
+     * Persist config file path inside var directory
      */
-    const PERSIST_CONFIG_FILE = 'persist.xml';
+    const PERSIST_CONFIG_FILE_VAR_PATH = 'shopgo/totango/persist.xml';
 
     /**
      * Persist config mode status path
@@ -163,8 +163,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     public function getConfig($path, $store = null)
     {
-        $persistConfigPath = Mage::getModuleDir('etc', self::MODULE_NAME)
-                           . DS . self::PERSIST_CONFIG_FILE;
+        $persistConfigPath = Mage::getBaseDir('var')
+                           . DS . self::PERSIST_CONFIG_FILE_VAR_PATH;
 
         try {
             if (file_exists($persistConfigPath)) {
