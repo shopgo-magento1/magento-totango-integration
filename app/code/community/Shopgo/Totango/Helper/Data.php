@@ -60,12 +60,12 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     /**
      * Persist config file name
      */
-    const PERSIST_CONFIG_FILE     = 'persist.xml';
+    const PERSIST_CONFIG_FILE = 'persist.xml';
 
     /**
-     * Persist status config path
+     * Persist config mode status path
      */
-    const XML_PATH_PERSIST_STATUS = 'persist';
+    const XML_PATH_PERSIST_CONFIG_MODE_STATUS = 'persist';
 
 
     /**
@@ -157,18 +157,40 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         $persistConfigPath = Mage::getModuleDir('etc', self::MODULE_NAME)
                            . DS . self::PERSIST_CONFIG_FILE;
 
-        if (file_exists($persistConfigPath)) {
-            $persistConfig = new Varien_Simplexml_Config(
-                $persistConfigPath
-            );
+        try {
+            if (file_exists($persistConfigPath)) {
+                $persistConfig = new Varien_Simplexml_Config(
+                    $persistConfigPath
+                );
 
-            $usePersist = $persistConfig->getNode(
-                self::XML_PATH_PERSIST_STATUS
-            )->asArray();
+                $persistMode = $persistConfig->getNode(
+                    self::XML_PATH_PERSIST_CONFIG_MODE_STATUS
+                )->asArray();
 
-            if ($usePersist !== 0) {
-                return $persistConfig->getNode($path)->asArray();
+                if ($persistMode) {
+                    return $persistConfig->getNode($path)->asArray();
+                } else {
+                    $this->log(array(
+                        'message' => 'Persist config mode is disabled',
+                        'level'   => 5
+                    ));
+                }
+            } else {
+                $this->log(array(
+                    'message' => 'Persist config file does not exist',
+                    'level'   => 5
+                ));
             }
+        } catch (Exception $e) {
+            $this->log(array(
+                'message' => sprintf(
+                    '[Get Config Persist Mode Exception]: %s',
+                    $e->getMessage()
+                ),
+                'level' => 3
+            ));
+
+            $this->log($e, 'exception');
         }
 
         return Mage::getStoreConfig($path, $store);
