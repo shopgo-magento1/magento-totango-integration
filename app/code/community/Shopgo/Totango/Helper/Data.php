@@ -167,7 +167,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                     self::XML_PATH_PERSIST_CONFIG_MODE_STATUS
                 )->asArray();
 
-                if ($persistMode) {
+                if ($persistMode === 1) {
                     return $persistConfig->getNode($path)->asArray();
                 } else {
                     $this->log(array(
