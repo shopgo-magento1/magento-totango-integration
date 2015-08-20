@@ -280,92 +280,13 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         foreach ($data as $event => $_data) {
-            switch ($event) {
-                case 'user-activity':
-                    if (isset($_data['action']) && isset($_data['module'])) {
-                        $params['sdr_u'] = $this->getConfig(
-                            self::XML_PATH_GENERAL_USER_ID
-                        );
-
-                        $params['sdr_a'] = $_data['action'];
-                        $params['sdr_m'] = $_data['module'];
-
-                        $canSend = true;
-                    } else {
-                        $canSend = false;
-
-                        $this->log(array(
-                            'message' => sprintf(
-                                'Insufficient tracking data for %s event',
-                                $event
-                            ),
-                            'level' => 3
-                        ));
-                    }
-
-                    break;
-
-                case 'account-attribute':
-                    if (is_array($_data) && !empty($_data)) {
-                        foreach ($_data as $name => $value) {
-                            $params["sdr_o.{$name}"] = $value;
-                        }
-
-                        $canSend = true;
-                    } else {
-                        $canSend = false;
-
-                        $this->log(array(
-                            'message' => sprintf(
-                                'Insufficient tracking data for %s event',
-                                $event
-                            ),
-                            'level' => 3
-                        ));
-                    }
-
-                    break;
-
-                case 'user-attribute':
-                    if (is_array($_data) && !empty($_data)) {
-                        $params['sdr_u'] = $this->getConfig(
-                            self::XML_PATH_GENERAL_USER_ID
-                        );
-
-                        foreach ($_data as $name => $value) {
-                            $params["sdr_u.{$name}"] = $value;
-                        }
-
-                        $canSend = true;
-                    } else {
-                        $canSend = false;
-
-                        $this->log(array(
-                            'message' => sprintf(
-                                'Insufficient tracking data for %s event',
-                                $event
-                            ),
-                            'level' => 3
-                        ));
-                    }
-
-                    break;
-
-                default:
-                    $this->log(array(
-                        'message' => sprintf(
-                            'The requested event %s is invalid',
-                            $event
-                        ),
-                        'level' => 3
-                    ));
-            }
+            $eventData = $this->_getEventData($event, $_data);
         }
 
-        $result = $canSend;
+        $result = $eventData['can_send'];
 
-        if ($canSend) {
-            $result = $this->_sendRequest($params);
+        if ($eventData['can_send']) {
+            $result = $this->_sendRequest($eventData['params']);
         } else {
             $this->log(array(
                 'message' => 'Could not send a request to Totango',
@@ -374,6 +295,99 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
         }
 
         return $result;
+    }
+
+    /**
+     * Get Totango event data
+     *
+     * @param string $event
+     * @param array $data
+     * @return array
+     */
+    private function _getEventData($event, $data)
+    {
+        $canSend = false;
+        $params  = array();
+
+        switch ($event) {
+            case 'user-activity':
+                if (isset($data['action']) && isset($data['module'])) {
+                    $params['sdr_u'] = $this->getConfig(
+                        self::XML_PATH_GENERAL_USER_ID
+                    );
+
+                    $params['sdr_a'] = $_data['action'];
+                    $params['sdr_m'] = $_data['module'];
+
+                    $canSend = true;
+                } else {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Insufficient tracking data for %s event',
+                            $event
+                        ),
+                        'level' => 3
+                    ));
+                }
+
+                break;
+
+            case 'account-attribute':
+                if (is_array($data) && !empty($data)) {
+                    foreach ($data as $name => $value) {
+                        $params["sdr_o.{$name}"] = $value;
+                    }
+
+                    $canSend = true;
+                } else {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Insufficient tracking data for %s event',
+                            $event
+                        ),
+                        'level' => 3
+                    ));
+                }
+
+                break;
+
+            case 'user-attribute':
+                if (is_array($data) && !empty($data)) {
+                    $params['sdr_u'] = $this->getConfig(
+                        self::XML_PATH_GENERAL_USER_ID
+                    );
+
+                    foreach ($data as $name => $value) {
+                        $params["sdr_u.{$name}"] = $value;
+                    }
+
+                    $canSend = true;
+                } else {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Insufficient tracking data for %s event',
+                            $event
+                        ),
+                        'level' => 3
+                    ));
+                }
+
+                break;
+
+            default:
+                $this->log(array(
+                    'message' => sprintf(
+                        'The requested event %s is invalid',
+                        $event
+                    ),
+                    'level' => 3
+                ));
+        }
+
+        return array(
+            'can_send' => $canSend,
+            'params'   => $params
+        );
     }
 
     /**
