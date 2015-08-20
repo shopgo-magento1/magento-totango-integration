@@ -93,12 +93,16 @@ class Shopgo_Totango_Model_Observer
         }
 
         if ($helper->isTrackerEnabled('product')) {
-            $product   = $observer->getProduct();
-            $isProduct = Mage::getModel('catalog/product')
-                         ->getCollection()
-                         ->addFieldToFilter('entity_id', $product->getId())
-                         ->getFirstItem()
-                         ->getId();
+            $product        = $observer->getProduct();
+            $prodCollection = Mage::getModel('catalog/product')
+                              ->getCollection()
+                              ->addFieldToFilter('entity_id', $product->getId())
+                              ->setPageSize(1)
+                              ->getItems();
+
+            $isProduct = (int) array_shift(
+                array_values($prodCollection)
+            )->getId();
 
             if (!$isProduct) {
                 $productsCount = Mage::getModel('catalog/product')
