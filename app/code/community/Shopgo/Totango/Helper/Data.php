@@ -167,12 +167,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                            . DS . self::PERSIST_CONFIG_FILE_VAR_PATH;
 
         try {
-            if (file_exists($persistConfigPath)) {
-                $persistConfig = new Varien_Simplexml_Config(
-                    $persistConfigPath
-                );
+            $xmlConfig = new Varien_Simplexml_Config();
 
-                $persistMode = $persistConfig->getNode(
+            if ($xmlConfig->loadFile($persistConfigPath)) {
+                $persistMode = $xmlConfig->getNode(
                     self::XML_PATH_PERSIST_CONFIG_MODE_STATUS
                 )->asArray();
 
@@ -192,7 +190,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 }
             } else {
                 $this->log(array(
-                    'message' => 'Persist config file does not exist',
+                    'message' => 'Could not readPersist config file does not exist',
                     'level'   => 5
                 ));
             }
