@@ -190,7 +190,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 }
             } else {
                 $this->log(array(
-                    'message' => 'Could not readPersist config file does not exist',
+                    'message' => 'Could not read Persist config file does not exist',
                     'level'   => 5
                 ));
             }
@@ -262,7 +262,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         if (empty($params['sdr_s']) || empty($params['sdr_o'])) {
             $this->log(array(
-                'message' => 'Insufficient tracking data',
+                'message' => 'Insufficient tracking data ' .
+                             '(Service ID and Account ID are mandatory)',
                 'level'   => 3
             ));
 
@@ -277,22 +278,22 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             $params['sdr_odn'] = $accountName;
         }
 
+        $canSend = true;
+
         foreach ($data as $event => $_data) {
             $eventData = $this->_getEventData($event, $_data);
+            $canSend   = $canSend && $eventData['can_send'];
+            $params    = array_merge($params, $eventData['params']);
         }
 
-        $result = $eventData['can_send'];
-
-        if ($eventData['can_send']) {
-            $result = $this->_sendRequest($eventData['params']);
+        if ($canSend) {
+            return $this->_sendRequest($params);
         } else {
             $this->log(array(
                 'message' => 'Could not send a request to Totango',
                 'level'   => 3
             ));
         }
-
-        return $result;
     }
 
     /**
@@ -314,8 +315,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                         self::XML_PATH_GENERAL_USER_ID
                     );
 
-                    $params['sdr_a'] = $_data['action'];
-                    $params['sdr_m'] = $_data['module'];
+                    $params['sdr_a'] = $data['action'];
+                    $params['sdr_m'] = $data['module'];
 
                     $canSend = true;
                 } else {

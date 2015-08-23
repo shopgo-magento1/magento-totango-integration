@@ -58,9 +58,20 @@ class Shopgo_Totango_Model_Observer
             return;
         }
 
+        if (!in_array($orderState, array_keys($orderStates))) {
+            $helper->log(array(
+                'message' => sprintf(
+                    '%s orders are not trackable',
+                    ucfirst($orderState)
+                ),
+                'level' => 5
+            ));
+
+            return;
+        }
+
         foreach ($orderStates as $state => $data) {
-            if ($helper->isTrackerEnabled($data['tracker-name'])
-                && $orderState == $state) {
+            if ($helper->isTrackerEnabled($data['tracker-name'])) {
                 $orders = Mage::getModel('sales/order')
                           ->getCollection()
                           ->addAttributeToFilter('status', array(
@@ -86,23 +97,19 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        $helper->log('Track new catalog product');
+        $helper->log('Track new catalog product, Start...');
 
         if (!$helper->isEnabled()) {
             return;
         }
 
         if ($helper->isTrackerEnabled('product')) {
-            $product        = $observer->getProduct();
-            $prodCollection = Mage::getModel('catalog/product')
-                              ->getCollection()
-                              ->addFieldToFilter('entity_id', $product->getId())
-                              ->setPageSize(1)
-                              ->getItems();
-
-            $isProduct = (int) array_shift(
-                array_values($prodCollection)
-            )->getId();
+            $product   = $observer->getProduct();
+            $isProduct = Mage::getModel('catalog/product')
+                         ->getCollection()
+                         ->addFieldToFilter('entity_id', $product->getId())
+                         ->setPageSize(1)
+                         ->getItems();
 
             if (!$isProduct) {
                 $productsCount = Mage::getModel('catalog/product')
@@ -116,6 +123,11 @@ class Shopgo_Totango_Model_Observer
                     'account-attribute' => array(
                         'Number of Catalog Products' => $productsCount + 1
                     )
+                ));
+            } else {
+                $helper->log(array(
+                    'message' => 'Not a new catalog product!',
+                    'level'   => 5
                 ));
             }
         }
@@ -131,7 +143,7 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        $helper->log('Track new catalog category');
+        $helper->log('Track new catalog category, Start...');
 
         if (!$helper->isEnabled()) {
             return;
@@ -156,6 +168,11 @@ class Shopgo_Totango_Model_Observer
                         'Number of Catalog Categories' => $categoriesCount + 1
                     )
                 ));
+            } else {
+                $helper->log(array(
+                    'message' => 'Not a new catalog category!',
+                    'level'   => 5
+                ));
             }
         }
     }
@@ -170,7 +187,7 @@ class Shopgo_Totango_Model_Observer
     {
         $helper = Mage::helper('totango');
 
-        $helper->log('Track new catalog attribute');
+        $helper->log('Track new catalog attribute, Start...');
 
         if (!$helper->isEnabled()) {
             return;
@@ -194,6 +211,11 @@ class Shopgo_Totango_Model_Observer
                     'account-attribute' => array(
                         'Number of Catalog Attributes' => $attributesCount
                     )
+                ));
+            } else {
+                $helper->log(array(
+                    'message' => 'Not a new catalog attribute!',
+                    'level'   => 5
                 ));
             }
         }
@@ -230,8 +252,16 @@ class Shopgo_Totango_Model_Observer
                     'account-attribute' => array(
                         'Admin User Name' => $adminUser->getUsername(),
                         'Admin Last Login Time' => $adminUser->getLogdate(),
-                        'Admin Login Number'    => $adminUser->getLognum()
+                        'Admin Login Number'    => $adminUser->getLognum() + 1
                     )
+                ));
+            } else {
+                $helper->log(array(
+                    'message' => sprintf(
+                        'Admin user "%s" is excluded from tracking',
+                        $adminUsername
+                    ),
+                    'level' => 5
                 ));
             }
         }
