@@ -55,7 +55,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     /**
      * Trackers config active field
      */
-    const XML_PATH_TRACKERS_ACTIVE = 'totango/trackers/';
+    const XML_PATH_TRACKERS_ACTIVE = 'active';
 
     /**
      * Trackers advanced excluded admin users config path
