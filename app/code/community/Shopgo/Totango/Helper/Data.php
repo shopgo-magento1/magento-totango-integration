@@ -53,6 +53,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     const XML_PATH_TRACKERS = 'totango/trackers/';
 
     /**
+     * Trackers config active field
+     */
+    const XML_PATH_TRACKERS_ACTIVE = 'totango/trackers/';
+
+    /**
      * Trackers advanced excluded admin users config path
      */
     const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'totango/trackers_advanced/excluded_admin_users';
@@ -127,7 +132,18 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     {
         $result = false;
 
-        if (in_array($tracker, self::getTrackers())) {
+        $allTrackers = $this->getConfig(
+            self::XML_PATH_TRACKERS . self::XML_PATH_TRACKERS_ACTIVE
+        );
+
+        if ($allTrackers === 1) {
+            $result = true;
+
+            $this->log(array(
+                'message' => 'All trackers are active/enabled',
+                'level'   => 5
+            ));
+        } elseif (in_array($tracker, self::getTrackers())) {
             $result = $this->getConfig(
                 self::XML_PATH_TRACKERS . $tracker
             );
