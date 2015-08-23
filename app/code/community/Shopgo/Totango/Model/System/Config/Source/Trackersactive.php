@@ -40,11 +40,11 @@ class Shopgo_Totango_Model_System_Config_Source_Trackersactive
         $options = array(
             array(
                 'label' => $helper->__('All'),
-                'value' => 1
+                'value' => Shopgo_Totango_Helper_Data::TRACKERS_ACTIVE_ALL
             ),
             array(
                 'label' => $helper->__('Custom'),
-                'value' => 2
+                'value' => Shopgo_Totango_Helper_Data::TRACKERS_ACTIVE_CUSTOM
             )
         );
 
