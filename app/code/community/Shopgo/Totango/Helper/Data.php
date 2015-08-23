@@ -132,11 +132,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     {
         $result = false;
 
-        $allTrackers = $this->getConfig(
+        $trackersActive = $this->getConfig(
             self::XML_PATH_TRACKERS . self::XML_PATH_TRACKERS_ACTIVE
         );
 
-        if ($allTrackers === 1) {
+        if ($trackersActive === 1) {
             $result = true;
 
             $this->log(array(
