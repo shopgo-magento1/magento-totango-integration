@@ -29,11 +29,6 @@
 class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 {
     /**
-     * Module name
-     */
-    const MODULE_NAME = 'Shopgo_Totango';
-
-    /**
      * Totango service URL
      */
     const SERVICE_URL = 'https://sdr.totango.com/pixel.gif/';
