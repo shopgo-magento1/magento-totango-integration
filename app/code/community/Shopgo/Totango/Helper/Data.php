@@ -429,9 +429,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             return $result;
         }
 
-        $httpClient = new Varien_Http_Client();
-
         try {
+            $httpClient = new Varien_Http_Client();
+
             $response = $httpClient
                         ->setUri($url)
                         ->setHeaders('Content-Type: image/gif')
