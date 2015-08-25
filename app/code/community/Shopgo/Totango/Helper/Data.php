@@ -249,14 +249,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     public function track($data)
     {
         $canSend = false;
-
-        $events      = array_keys($data);
-        $multiEvents = count($events) > 1 ? 's' : '';
-        $events      = implode(', ', $events);
+        $events  = implode(', ', array_keys($data));
 
         $this->log(sprintf(
-            'Track Totango %s event%s',
-            $events, $multiEvents
+            'Track Totango %s event(s)',
+            $events
         ));
 
         if (empty($data)) {
@@ -436,10 +433,10 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         try {
             $response = $httpClient
-                ->setUri($url)
-                ->setHeaders('Content-Type: image/gif')
-                ->setParameterPost($params)
-                ->request(Varien_Http_Client::POST);
+                        ->setUri($url)
+                        ->setHeaders('Content-Type: image/gif')
+                        ->setParameterPost($params)
+                        ->request(Varien_Http_Client::POST);
 
             if ($response->isSuccessful()) {
                 $result = true;
