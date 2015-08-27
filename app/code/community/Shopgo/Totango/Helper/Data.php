@@ -11,7 +11,7 @@
  *
  * @category    Shopgo
  * @package     Shopgo_Totango
- * @copyright   Copyright (c) 2015 Shopgo. (http://www.shopgo.me)
+ * @copyright   Copyright (c) 2015 ShopGo. (http://www.shopgo.me)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
