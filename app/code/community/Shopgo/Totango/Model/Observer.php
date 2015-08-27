@@ -165,7 +165,7 @@ class Shopgo_Totango_Model_Observer
                         'module' => 'Catalog'
                     ),
                     'account-attribute' => array(
-                        'Number of Catalog Categories' => $categoriesCount + 1
+                        'Number of Catalog Categories' => $categoriesCount - 1
                     )
                 ));
             } else {
@@ -209,7 +209,7 @@ class Shopgo_Totango_Model_Observer
                         'module' => 'Catalog'
                     ),
                     'account-attribute' => array(
-                        'Number of Catalog Attributes' => $attributesCount
+                        'Number of Catalog Attributes' => $attributesCount + 1
                     )
                 ));
             } else {
@@ -244,6 +244,8 @@ class Shopgo_Totango_Model_Observer
             $excludedAdminUsers = $helper->getExcludedAdminUsers();
 
             if (!in_array($adminUsername, $excludedAdminUsers)) {
+                $logDate = Mage::getModel('core/date')->date('Y-m-d H:i:s');
+
                 $helper->track(array(
                     'user-activity' => array(
                         'action' => 'AdminLogin',
@@ -251,7 +253,7 @@ class Shopgo_Totango_Model_Observer
                     ),
                     'account-attribute' => array(
                         'Admin User Name' => $adminUser->getUsername(),
-                        'Admin Last Login Time' => $adminUser->getLogdate(),
+                        'Admin Last Login Time' => $logDate,
                         'Admin Login Number'    => $adminUser->getLognum() + 1
                     )
                 ));
