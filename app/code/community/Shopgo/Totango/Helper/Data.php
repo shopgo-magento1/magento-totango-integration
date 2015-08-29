@@ -64,9 +64,15 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     const XML_PATH_TRACKERS_ADV_EXC_ADMIN = 'totango/trackers_advanced/excluded_admin_users';
 
     /**
-     * Persist config file path inside var directory
+     * Module var directory
      */
-    const PERSIST_CONFIG_FILE_VAR_PATH = 'shopgo/totango/persist.xml';
+    const VAR_DIR = 'shopgo/totango/';
+
+    /**
+     * Persist config files
+     */
+    const PERSIST_FILE       = 'persist.xml';
+    const PERSIST_LOCAL_FILE = 'persist_local.xml';
 
     /**
      * Persist config mode status path
@@ -137,42 +143,44 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             self::XML_PATH_TRACKERS . self::XML_PATH_TRACKERS_ACTIVE
         );
 
-        if ($trackersActive === self::TRACKERS_ACTIVE_ALL) {
+        if ($trackersActive == self::TRACKERS_ACTIVE_ALL) {
             $result = true;
 
             $this->log(array(
                 'message' => 'All trackers are active/enabled',
                 'level'   => 5
             ));
-        } elseif (in_array($tracker, self::getTrackers())) {
-            $result = $this->getConfig(
-                self::XML_PATH_TRACKERS . $tracker
-            );
+        } else {
+            if (in_array($tracker, self::getTrackers())) {
+                $result = $this->getConfig(
+                    self::XML_PATH_TRACKERS . $tracker
+                );
 
-            if (!$result) {
+                if (!$result) {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Tracker "%s" is disabled',
+                            $tracker
+                        ),
+                        'level' => 5
+                    ));
+                }
+            } else {
                 $this->log(array(
                     'message' => sprintf(
-                        'Tracker "%s" is disabled',
+                        'Tracker "%s" is invalid',
                         $tracker
                     ),
-                    'level' => 5
+                    'level' => 3
                 ));
             }
-        } else {
-            $this->log(array(
-                'message' => sprintf(
-                    'Tracker "%s" is invalid',
-                    $tracker
-                ),
-                'level' => 3
-            ));
         }
 
         return $result;
     }
 
     /**
-     * Customized get mage store config
+     * Customized get Mage store config
      *
      * @param string $path
      * @param mixed $store
@@ -180,25 +188,61 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      */
     public function getConfig($path, $store = null)
     {
-        $persistConfigPath = Mage::getBaseDir('var')
-                           . DS . self::PERSIST_CONFIG_FILE_VAR_PATH;
+        $config = $this->_getPersistConfig($path);
+
+        if ($config === null || trim($config) == '') {
+            $config = Mage::getStoreConfig($path, $store);
+        }
+
+        return $config;
+    }
+
+    /**
+     * Get persist config value
+     *
+     * @param string $path
+     * @return mixed
+     */
+    private function _getPersistConfig($path)
+    {
+        $config = null;
+        $var    = Mage::getBaseDir('var')
+                . DS . str_replace('/', DS, self::VAR_DIR);
+
+        $persistConfig = array(
+            'base'  => $var . self::PERSIST_FILE,
+            'local' => $var . self::PERSIST_LOCAL_FILE
+        );
 
         try {
-            $xmlConfig = new Varien_Simplexml_Config();
+            $persistBase = $this->_loadXmlFile($persistConfig['base']);
 
-            if ($xmlConfig->loadFile($persistConfigPath)) {
-                $persistMode = $xmlConfig->getNode(
+            if ($persistBase->hasFile) {
+                $persistStatus = $persistBase->getNode(
                     self::XML_PATH_PERSIST_CONFIG_MODE_STATUS
-                )->asArray();
+                );
 
-                if ($persistMode === 1) {
+                if (!$persistStatus) {
+                    $this->log(array(
+                        'message' => 'Persist config status path is invalid',
+                        'level'   => 3
+                    ));
+
+                    return $config;
+                }
+
+                if ($persistStatus->asArray() == 1) {
                     $this->log(array(
                         'message' => 'Persist config mode is enabled ' .
                                      '(Magento system configuration value is ignored!)',
                         'level'   => 5
                     ));
 
-                    return $persistConfig->getNode($path)->asArray();
+                    $persistLocal = $this->_loadXmlFile($persistConfig['local']);
+
+                    return $this->_getPersistConfigFromSource(
+                        $path, $persistBase, $persistLocal
+                    );
                 } else {
                     $this->log(array(
                         'message' => 'Persist config mode is disabled',
@@ -207,14 +251,14 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 }
             } else {
                 $this->log(array(
-                    'message' => 'Could not read Persist config file does not exist',
+                    'message' => 'Could not read persist config file',
                     'level'   => 5
                 ));
             }
         } catch (Exception $e) {
             $this->log(array(
                 'message' => sprintf(
-                    '[Get Config Persist Mode Exception]: %s',
+                    '[Persist Config Mode Exception]: %s',
                     $e->getMessage()
                 ),
                 'level' => 3
@@ -223,7 +267,91 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             $this->log($e, 'exception');
         }
 
-        return Mage::getStoreConfig($path, $store);
+        return $config;
+    }
+
+    /**
+     * Get persist config from base or local sources
+     *
+     * @param string $path
+     * @param Varien_Simplexml_Config $persistBase
+     * @param Varien_Simplexml_Config $persistLocal
+     * @return mixed
+     */
+    private function _getPersistConfigFromSource($path, $persistBase, $persistLocal)
+    {
+        $config = null;
+
+        switch ($persistLocal->hasFile) {
+            case true:
+                $config = $persistLocal->getNode($path);
+
+                if (!empty($config)) {
+                    $config = $config->asArray();
+
+                    $this->log(array(
+                        'message' => 'Persist config "local" is used',
+                        'level'   => 5
+                    ));
+
+                    if (trim($config) != '') {
+                        break;
+                    }
+                } else {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Persist config "local" path (%s) ' .
+                            'is invalid or does not exist',
+                            $path
+                        ),
+                        'level' => 5
+                    ));
+                }
+
+                // Break is omitted on purporse
+
+            case false:
+                // It looks a bit odd, but this is a necessary check
+                if (!$persistLocal->hasFile) {
+                    $this->log(array(
+                        'message' => 'Could not read persist config local file',
+                        'level'   => 5
+                    ));
+                }
+
+                $config = $persistBase->getNode($path);
+
+                if (!empty($config)) {
+                    $config = $config->asArray();
+                } else {
+                    $this->log(array(
+                        'message' => sprintf(
+                            'Persist config "local" path (%s) ' .
+                            'is invalid or does not exist',
+                            $path
+                        ),
+                        'level' => 5
+                    ));
+                }
+
+                break;
+        }
+
+        return $config;
+    }
+
+    /**
+     * Load XML file
+     *
+     * @param string $file
+     * @return Varien_Simplexml_Config
+     */
+    private function _loadXmlFile($file)
+    {
+        $xmlConfig = new Varien_Simplexml_Config();
+        $xmlConfig->hasFile = $xmlConfig->loadFile($file);
+
+        return $xmlConfig;
     }
 
     /**
@@ -237,7 +365,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             self::XML_PATH_TRACKERS_ADV_EXC_ADMIN
         );
 
-        return array_map('trim', explode(',', $excludedAdminUsers));
+        return trim($excludedAdminUsers) != ''
+            ? array_map('trim', explode(',', $excludedAdminUsers))
+            : array();
     }
 
     /**

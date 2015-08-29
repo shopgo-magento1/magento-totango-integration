@@ -121,6 +121,7 @@ class Shopgo_Totango_Model_Observer
                         'module' => 'Catalog'
                     ),
                     'account-attribute' => array(
+                        // New product is not counted. Thus, increment by 1
                         'Number of Catalog Products' => $productsCount + 1
                     )
                 ));
@@ -165,6 +166,7 @@ class Shopgo_Totango_Model_Observer
                         'module' => 'Catalog'
                     ),
                     'account-attribute' => array(
+                        // Exclude root category. Thus, decrement by 1
                         'Number of Catalog Categories' => $categoriesCount - 1
                     )
                 ));
@@ -209,6 +211,7 @@ class Shopgo_Totango_Model_Observer
                         'module' => 'Catalog'
                     ),
                     'account-attribute' => array(
+                        // New attribute is not counted. Thus, increment by 1
                         'Number of Catalog Attributes' => $attributesCount + 1
                     )
                 ));
@@ -244,6 +247,8 @@ class Shopgo_Totango_Model_Observer
             $excludedAdminUsers = $helper->getExcludedAdminUsers();
 
             if (!in_array($adminUsername, $excludedAdminUsers)) {
+                // New login is not counted. So, this a work around for
+                // $adminUser->getLogDate()
                 $logDate = Mage::getModel('core/date')->date('Y-m-d H:i:s');
 
                 $helper->track(array(
@@ -254,6 +259,7 @@ class Shopgo_Totango_Model_Observer
                     'account-attribute' => array(
                         'Admin User Name' => $adminUser->getUsername(),
                         'Admin Last Login Time' => $logDate,
+                        // New login is not counted. Thus, increment by 1
                         'Admin Login Number'    => $adminUser->getLognum() + 1
                     )
                 ));
