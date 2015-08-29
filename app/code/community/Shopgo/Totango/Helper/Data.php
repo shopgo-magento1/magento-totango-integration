@@ -21,7 +21,7 @@
  *
  * @category    Shopgo
  * @package     Shopgo_Totango
- * @authors     Ammar <ammar@shopgo.me>
+ * @author      Ammar <ammar@shopgo.me>
  *              Emad  <emad@shopgo.me>
  *              Ahmad <ahmadalkaid@shopgo.me>
  *              Aya   <aya@shopgo.me>
@@ -151,7 +151,9 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 'level'   => 5
             ));
         } else {
-            if (in_array($tracker, self::getTrackers())) {
+            $trackers = self::getTrackers();
+
+            if (isset($trackers[$tracker])) {
                 $result = $this->getConfig(
                     self::XML_PATH_TRACKERS . $tracker
                 );

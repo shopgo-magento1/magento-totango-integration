@@ -21,7 +21,7 @@
  *
  * @category    Shopgo
  * @package     Shopgo_Totango
- * @authors     Ammar <ammar@shopgo.me>
+ * @author      Ammar <ammar@shopgo.me>
  *              Emad  <emad@shopgo.me>
  *              Ahmad <ahmadalkaid@shopgo.me>
  *              Aya   <aya@shopgo.me>
@@ -58,7 +58,9 @@ class Shopgo_Totango_Model_Observer
             return;
         }
 
-        if (!in_array($orderState, array_keys($orderStates))) {
+        $orderStatesNames = array_keys($orderStates);
+
+        if (!isset($orderStatesNames[$orderState])) {
             $helper->log(array(
                 'message' => sprintf(
                     '%s orders are not trackable',
@@ -156,7 +158,7 @@ class Shopgo_Totango_Model_Observer
                           ->getCollection()
                           ->getAllIds();
 
-            if (!in_array($categoryId, $categories)) {
+            if (!isset($categories[$categoryId])) {
                 $categoriesCount = Mage::getModel('catalog/category')
                                    ->getCollection()->getSize();
 
@@ -246,7 +248,7 @@ class Shopgo_Totango_Model_Observer
 
             $excludedAdminUsers = $helper->getExcludedAdminUsers();
 
-            if (!in_array($adminUsername, $excludedAdminUsers)) {
+            if (!isset($excludedAdminUsers[$adminUsername])) {
                 // New login is not counted. So, this a work around for
                 // $adminUser->getLogDate()
                 $logDate = Mage::getModel('core/date')->date('Y-m-d H:i:s');
