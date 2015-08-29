@@ -182,6 +182,17 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     }
 
     /**
+     * Get module var directory path
+     *
+     * @return string
+     */
+    public function getVarDir()
+    {
+        return Mage::getBaseDir('var')
+            . DS . str_replace('/', DS, self::VAR_DIR);
+    }
+
+    /**
      * Customized get Mage store config
      *
      * @param string $path
@@ -208,12 +219,11 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     private function _getPersistConfig($path)
     {
         $config = null;
-        $var    = Mage::getBaseDir('var')
-                . DS . str_replace('/', DS, self::VAR_DIR);
+        $varDir = $this->getVarDir();
 
         $persistConfig = array(
-            'base'  => $var . self::PERSIST_FILE,
-            'local' => $var . self::PERSIST_LOCAL_FILE
+            'base'  => $varDir . self::PERSIST_FILE,
+            'local' => $varDir . self::PERSIST_LOCAL_FILE
         );
 
         try {
