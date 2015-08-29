@@ -310,7 +310,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                     ));
                 }
 
-                // Break is omitted on purporse
+                // Break is omitted on purpose
 
             case false:
                 // It looks a bit odd, but this is a necessary check
