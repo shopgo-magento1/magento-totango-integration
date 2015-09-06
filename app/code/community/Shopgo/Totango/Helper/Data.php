@@ -72,7 +72,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
      * Persist config files
      */
     const PERSIST_FILE       = 'persist.xml';
-    const PERSIST_LOCAL_FILE = 'persist_local.xml';
+    const PERSIST_LOCAL_FILE = 'persist.local.xml';
 
     /**
      * Persist config mode status path
