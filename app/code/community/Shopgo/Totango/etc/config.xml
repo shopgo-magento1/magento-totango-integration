@@ -38,6 +38,15 @@
             </totango>
         </models>
         <events>
+            <sales_order_save_after>
+                <observers>
+                    <sales_order_save_after_observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackOrderStatus</method>
+                    </sales_order_save_after_observer>
+                </observers>
+            </sales_order_save_after>
             <catalog_product_save_before>
                 <observers>
                     <catalog_product_save_before_observer>
@@ -65,15 +74,24 @@
                     </catalog_entity_attribute_save_before_observer>
                 </observers>
             </catalog_entity_attribute_save_before>
-            <sales_order_save_after>
+            <admin_system_config_changed_section_carriers>
                 <observers>
-                    <sales_order_save_after_observer>
+                    <admin_system_config_changed_section_carriers_observer>
                         <type>singleton</type>
                         <class>totango/observer</class>
-                        <method>trackOrderStatus</method>
-                    </sales_order_save_after_observer>
+                        <method>trackActiveCarriers</method>
+                    </admin_system_config_changed_section_carriers_observer>
                 </observers>
-            </sales_order_save_after>
+            </admin_system_config_changed_section_carriers>
+            <admin_system_config_changed_section_payment>
+                <observers>
+                    <admin_system_config_changed_section_payment_observer>
+                        <type>singleton</type>
+                        <class>totango/observer</class>
+                        <method>trackActivePaymentMethods</method>
+                    </admin_system_config_changed_section_payment_observer>
+                </observers>
+            </admin_system_config_changed_section_payment>
             <admin_session_user_login_success>
                 <observers>
                     <admin_session_user_login_success_observer>

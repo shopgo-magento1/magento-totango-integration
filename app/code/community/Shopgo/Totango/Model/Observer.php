@@ -204,8 +204,9 @@ class Shopgo_Totango_Model_Observer
                            ->getAttributeCode();
 
             if (!$isAttribute) {
-                $attributesCount = Mage::getResourceModel('catalog/product_attribute_collection')
-                                   ->addVisibleFilter()->getSize();
+                $attributesCount = Mage::getResourceModel(
+                    'catalog/product_attribute_collection'
+                )->addVisibleFilter()->getSize();
 
                 $helper->track(array(
                     'user-activity' => array(
@@ -223,6 +224,85 @@ class Shopgo_Totango_Model_Observer
                     'level'   => 5
                 ));
             }
+        }
+    }
+
+    /**
+    * Track active carriers
+    *
+    * @return null
+    */
+    public function trackActiveCarriers()
+    {
+        $helper = Mage::helper('totango');
+
+        $helper->log('Track active carriers, Start...');
+
+        if (!$helper->isEnabled()) {
+            return;
+        }
+
+        if ($helper->isTrackerEnabled('carrier')) {
+            $methods = Mage::getSingleton('shipping/config')
+                       ->getActiveCarriers();
+
+            $methodsName = implode(', ', array_map(
+                function($method) {
+                    $title = Mage::getStoreConfig("carriers/{$method}/title");
+                    return "{$title} [{$method}]";
+                },
+                array_keys($methods)
+            ));
+
+            $helper->track(array(
+                'user-activity' => array(
+                    'action' => 'CarriersSave',
+                    'module' => 'Shipping'
+                ),
+                'account-attribute' => array(
+                    'Number of Active Carriers' => count($methods),
+                    'Name of Active Carriers'   => $methodsNames
+                )
+            ));
+        }
+    }
+
+    /**
+    * Track active payment methods
+    *
+    * @return null
+    */
+    public function trackActivePaymentMethods()
+    {
+        $helper = Mage::helper('totango');
+
+        $helper->log('Track active payment methods, Start...');
+
+        if (!$helper->isEnabled()) {
+            return;
+        }
+
+        if ($helper->isTrackerEnabled('payment')) {
+            $methods = Mage::getSingleton('payment/config')
+                       ->getActiveMethods();
+
+            $methodsName = implode(', ', array_map(
+                function($method) {
+                    return "{$method->getTitle()} [{$method->getCode()}]";
+                },
+                array_values($methods)
+            ));
+
+            $helper->track(array(
+                'user-activity' => array(
+                    'action' => 'PaymentMethodsSave',
+                    'module' => 'Payment'
+                ),
+                'account-attribute' => array(
+                    'Number of Active Payment Methods' => count($methods),
+                    'Name of Active Payment Methods'   => $methodsNames
+                )
+            ));
         }
     }
 
