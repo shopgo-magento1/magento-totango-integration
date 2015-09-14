@@ -196,7 +196,7 @@
                     <fields>
                         <excluded_admin_users translate="label comment">
                             <label>Excluded Admin Users</label>
-                            <comment>Comma separated</comment>
+                            <comment><![CDATA[Admin Usernames (Comma separated)]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
