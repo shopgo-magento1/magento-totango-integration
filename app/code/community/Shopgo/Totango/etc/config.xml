@@ -106,12 +106,13 @@
     <default>
         <totango>
             <trackers>
+                <complete_orders>1</complete_orders>
+                <canceled_orders>1</canceled_orders>
                 <product>1</product>
                 <category>1</category>
                 <attribute>1</attribute>
-                <shipping_payment>1</shipping_payment>
-                <complete_orders>1</complete_orders>
-                <canceled_orders>1</canceled_orders>
+                <carrier>1</carrier>
+                <payment>1</payment>
                 <admin_login>1</admin_login>
             </trackers>
         </totango>
