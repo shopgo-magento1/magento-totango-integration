@@ -249,7 +249,7 @@ class Shopgo_Totango_Model_Observer
             $methods = Mage::getSingleton('shipping/config')
                        ->getActiveCarriers();
 
-            $methodsName = implode(', ', array_map(
+            $methodsNames = implode(', ', array_map(
                 function($method) {
                     $title = Mage::getStoreConfig("carriers/{$method}/title");
                     return "{$title} [{$method}]";
@@ -289,7 +289,7 @@ class Shopgo_Totango_Model_Observer
             $methods = Mage::getSingleton('payment/config')
                        ->getActiveMethods();
 
-            $methodsName = implode(', ', array_map(
+            $methodsNames = implode(', ', array_map(
                 function($method) {
                     return "{$method->getTitle()} [{$method->getCode()}]";
                 },
