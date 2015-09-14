@@ -21,10 +21,11 @@
  *
  * @category    Shopgo
  * @package     Shopgo_Totango
- * @author      Ammar <ammar@shopgo.me>
- *              Emad  <emad@shopgo.me>
- *              Ahmad <ahmadalkaid@shopgo.me>
- *              Aya   <aya@shopgo.me>
+ * @author      Ammar  <ammar@shopgo.me>
+ *              Emad   <emad@shopgo.me>
+ *              Ahmad  <ahmadalkaid@shopgo.me>
+ *              Aya    <aya@shopgo.me>
+ *              ShopGo <support@shopgo.me>
  */
 class Shopgo_Totango_Model_System_Config_Source_Trackersactive
 {
