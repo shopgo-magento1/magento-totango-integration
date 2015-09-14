@@ -261,7 +261,7 @@ class Shopgo_Totango_Model_Observer
                 ),
                 'account-attribute' => array(
                     'Number of Active Carriers' => count($methods),
-                    'Name of Active Carriers'   => $methodsNames
+                    'Names of Active Carriers'  => $methodsNames
                 )
             ));
         }
@@ -300,7 +300,7 @@ class Shopgo_Totango_Model_Observer
                 ),
                 'account-attribute' => array(
                     'Number of Active Payment Methods' => count($methods),
-                    'Name of Active Payment Methods'   => $methodsNames
+                    'Names of Active Payment Methods'  => $methodsNames
                 )
             ));
         }
