@@ -39,6 +39,10 @@ class Shopgo_Totango_Model_System_Config_Source_Trackersactive
 
         $options = array(
             array(
+                'label' => $helper->__('None'),
+                'value' => Shopgo_Totango_Helper_Data::TRACKERS_ACTIVE_NONE
+            ),
+            array(
                 'label' => $helper->__('All'),
                 'value' => Shopgo_Totango_Helper_Data::TRACKERS_ACTIVE_ALL
             ),

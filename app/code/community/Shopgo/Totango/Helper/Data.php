@@ -55,6 +55,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
     /**
      * Trackers config active field values
      */
+    const TRACKERS_ACTIVE_NONE   = 0;
     const TRACKERS_ACTIVE_ALL    = 1;
     const TRACKERS_ACTIVE_CUSTOM = 2;
 
@@ -143,39 +144,53 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
             self::XML_PATH_TRACKERS . self::XML_PATH_TRACKERS_ACTIVE
         );
 
-        if ($trackersActive == self::TRACKERS_ACTIVE_ALL) {
-            $result = true;
+        switch ($trackersActive) {
+            case self::TRACKERS_ACTIVE_NONE:
+                $result = false;
 
-            $this->log(array(
-                'message' => 'All trackers are active/enabled',
-                'level'   => 5
-            ));
-        } else {
-            $trackers = self::getTrackers();
+                $this->log(array(
+                    'message' => 'All trackers are inactive/disabled',
+                    'level'   => 5
+                ));
 
-            if (isset($trackers[$tracker])) {
-                $result = $this->getConfig(
-                    self::XML_PATH_TRACKERS . $tracker
-                );
+                break;
 
-                if (!$result) {
+            case self::TRACKERS_ACTIVE_ALL:
+                $result = true;
+
+                $this->log(array(
+                    'message' => 'All trackers are active/enabled',
+                    'level'   => 5
+                ));
+
+                break;
+
+            default:
+                $trackers = self::getTrackers();
+
+                if (isset($trackers[$tracker])) {
+                    $result = $this->getConfig(
+                        self::XML_PATH_TRACKERS . $tracker
+                    );
+
+                    if (!$result) {
+                        $this->log(array(
+                            'message' => sprintf(
+                                'Tracker "%s" is disabled',
+                                $tracker
+                            ),
+                            'level' => 5
+                        ));
+                    }
+                } else {
                     $this->log(array(
                         'message' => sprintf(
-                            'Tracker "%s" is disabled',
+                            'Tracker "%s" is invalid',
                             $tracker
                         ),
-                        'level' => 5
+                        'level' => 3
                     ));
                 }
-            } else {
-                $this->log(array(
-                    'message' => sprintf(
-                        'Tracker "%s" is invalid',
-                        $tracker
-                    ),
-                    'level' => 3
-                ));
-            }
         }
 
         return $result;

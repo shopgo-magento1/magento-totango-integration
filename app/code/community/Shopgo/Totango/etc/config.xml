@@ -106,6 +106,7 @@
     <default>
         <totango>
             <trackers>
+                <active>1</active>
                 <complete_orders>1</complete_orders>
                 <canceled_orders>1</canceled_orders>
                 <product>1</product>
