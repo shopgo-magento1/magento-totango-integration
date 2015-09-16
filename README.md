@@ -84,7 +84,7 @@ Authors
 * Emad (<emad@shopgo.me>)
 * Ahmad (<ahmadalkaid@shopgo.me>)
 * Aya (<aya@shopgo.me>)
-* ShopGo (support@shopgo.me)
+* ShopGo (<support@shopgo.me>)
 
 License
 -------
