@@ -1,11 +1,22 @@
-# Magento Totango Integration #
+Magento Totango Integration
+===========================
 
-### About Repository ###
+A Magento extension that integrates Magento platform with Totango tracking service.
 
-* A Magento extension that integrates Magento platform with Totango tracking service.
-* v1.0.0
+[![Build Status](https://travis-ci.org/shopgo-me/magento-totango-integration.svg?branch=master)](https://travis-ci.org/shopgo-me/magento-totango-integration)
+[![Dependency Status](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab)
 
-### How To Call Totango Service? ###
+What Is Totango?
+----------------
+
+Totango is the leading Customer Engagement platform that helps SaaS companies create an active and engaged user base.
+
+Totango is built on the idea that customer success is all about understanding, measuring, and delivering business value to customers. To do this, Totango’s platform is focused on identifying and monitoring “leading indicators” that help SaaS companies predict at-risk customers and proactively drive positive customer experiences.
+
+Totango pulls in data from multiple systems to assemble a rich profile of every customer, including a predictive health rating and an “engagement score,” which is computed based on data science and machine learning.
+
+How To Call Totango Service?
+----------------------------
 
 * Track User-Activity Event:
 ```
@@ -61,7 +72,13 @@ Mage::helper('totango')->track(array(
 ));
 ```
 
-### Authors ###
+Version
+-------
+
+v1.0.0
+
+Authors
+-------
 
 * Ammar (<ammar@shopgo.me>)
 * Emad (<emad@shopgo.me>)
@@ -69,7 +86,8 @@ Mage::helper('totango')->track(array(
 * Aya (<aya@shopgo.me>)
 * ShopGo (support@shopgo.me)
 
-### License ###
+License
+-------
 
 * OSL-3.0
 * AFL-3.0
