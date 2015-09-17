@@ -147,8 +147,6 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
 
         switch ($trackersActive) {
             case self::TRACKERS_ACTIVE_NONE:
-                $result = false;
-
                 $this->log(array(
                     'message' => 'All trackers are inactive/disabled',
                     'level'   => 5
