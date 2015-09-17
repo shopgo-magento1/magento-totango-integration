@@ -334,7 +334,7 @@ class Shopgo_Totango_Model_Observer
 
             if (!isset($excludedAdminUsers[$adminUsername])) {
                 // New login is not counted in this event.
-                // So, this is a work around for $adminUser->getLogDate()
+                // So, this is a workaround for $adminUser->getLogDate()
                 $logDate = Mage::getModel('core/date')->date('Y-m-d H:i:s');
 
                 $helper->track(array(
