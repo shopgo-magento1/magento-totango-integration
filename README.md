@@ -5,6 +5,7 @@ A Magento extension that integrates Magento platform with Totango tracking servi
 
 [![Build Status](https://travis-ci.org/shopgo-magento1/magento-totango-integration.svg?branch=master)](https://travis-ci.org/shopgo-me/magento-totango-integration)
 [![Dependency Status](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab)
+[![Release](https://img.shields.io/badge/totango-1.0.0-blue.svg)](https://github.com/shopgo-magento1/magento-totango-integration/releases/tag/1.0.0)
 
 What Is Totango?
 ----------------
@@ -71,11 +72,6 @@ Mage::helper('totango')->track(array(
     )
 ));
 ```
-
-Version
--------
-
-v1.0.0
 
 Authors
 -------
