@@ -165,7 +165,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 break;
 
             default:
-                $trackers = self::getTrackers();
+                $trackers = array_flip(self::getTrackers());
 
                 if (isset($trackers[$tracker])) {
                     $result = $this->getConfig(
@@ -321,6 +321,8 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                     ));
 
                     if (trim($config) != '') {
+                        // Break only if a persist config "local"
+                        // value is found.
                         break;
                     }
                 } else {
@@ -333,8 +335,6 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                         'level' => 5
                     ));
                 }
-
-                // Break is omitted on purpose
 
             case false:
                 // It looks a bit odd, but this is a necessary check
@@ -352,7 +352,7 @@ class Shopgo_Totango_Helper_Data extends Shopgo_Core_Helper_Abstract
                 } else {
                     $this->log(array(
                         'message' => sprintf(
-                            'Persist config "local" path (%s) ' .
+                            'Persist config path (%s) ' .
                             'is invalid or does not exist',
                             $path
                         ),

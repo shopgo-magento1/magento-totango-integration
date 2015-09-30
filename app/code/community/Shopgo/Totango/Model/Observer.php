@@ -59,9 +59,7 @@ class Shopgo_Totango_Model_Observer
             return;
         }
 
-        $orderStatesNames = array_keys($orderStates);
-
-        if (!isset($orderStatesNames[$orderState])) {
+        if (!isset($orderStates[$orderState])) {
             $helper->log(array(
                 'message' => sprintf(
                     '%s orders are not trackable',
@@ -75,6 +73,9 @@ class Shopgo_Totango_Model_Observer
 
         foreach ($orderStates as $state => $data) {
             if ($helper->isTrackerEnabled($data['tracker-name'])) {
+                // The following line which is used inside
+                // a for loop is a bit expensive!
+                // I might look for a possible workaround later.
                 $orders = Mage::getModel('sales/order')
                           ->getCollection()
                           ->addAttributeToFilter('status', array(
@@ -159,6 +160,8 @@ class Shopgo_Totango_Model_Observer
             $categories = Mage::getModel('catalog/category')
                           ->getCollection()
                           ->getAllIds();
+
+            $categories = array_flip($categories);
 
             if (!isset($categories[$categoryId])) {
                 $categoriesCount = Mage::getModel('catalog/category')
@@ -330,7 +333,9 @@ class Shopgo_Totango_Model_Observer
             $adminUser     = $observer->getUser();
             $adminUsername = $adminUser->getUsername();
 
-            $excludedAdminUsers = $helper->getExcludedAdminUsers();
+            $excludedAdminUsers = array_flip(
+                $helper->getExcludedAdminUsers()
+            );
 
             if (!isset($excludedAdminUsers[$adminUsername])) {
                 // New login is not counted in this event.
