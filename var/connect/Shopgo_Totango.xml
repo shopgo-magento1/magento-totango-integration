@@ -1,0 +1,120 @@
+<_>
+   <form_key>tP6zq4qDMbICLBGH</form_key>
+   <name>Shopgo_Totango</name>
+   <channel>community</channel>
+   <version_ids>
+      <version_ids>2</version_ids>
+   </version_ids>
+   <summary>Totango is a module that integrates Magento with Totango tracking service.</summary>
+   <description>&lt;p&gt;Totango is the leading Customer Engagement platform that helps SaaS companies create an active and engaged user base.&lt;/p&gt;
+&lt;p&gt;Totango is built on the idea that customer success is all about understanding, measuring, and delivering business value to customers. To do this, Totango’s platform is focused on identifying and monitoring “leading indicators” that help SaaS companies predict at-risk customers and proactively drive positive customer experiences.&lt;/p&gt;
+&lt;p&gt;Totango pulls in data from multiple systems to assemble a rich profile of every customer, including a predictive health rating and an “engagement score,” which is computed based on data science and machine learning.&lt;/p&gt;
+&lt;h3&gt;How does it work?&lt;/h3&gt;
+&lt;p&gt;The module&apos;s job is to monitor and track some users&apos; activities on Magento (e.g. Adding Products, Canceling Orders, ...etc.) and sends tracking data to Totango.&lt;/p&gt;
+&lt;p&gt;It does not have any front end interface, and all of its work is done in the background without noticing it.&lt;/p&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+    &lt;li&gt;Track complete and canceled orders.&lt;/li&gt;
+    &lt;li&gt;Track new products.&lt;/li&gt;
+    &lt;li&gt;Track new categories.&lt;/li&gt;
+    &lt;li&gt;Track new attributes.&lt;/li&gt;
+    &lt;li&gt;Track enabled shipping methods.&lt;/li&gt;
+    &lt;li&gt;Track enabled payment methods.&lt;/li&gt;
+    &lt;li&gt;Track successful admin logins.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Dependencies&lt;/h3&gt;
+&lt;ul&gt;
+    &lt;li&gt;ShopGo Core&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Notes&lt;/h3&gt;
+&lt;ul&gt;
+    &lt;li&gt;Make sure that all dependencies mentioned above are installed before installing this module. Otherwise, it won&apos;t work.&lt;/li&gt;
+    &lt;li&gt;More trackers could be added in the future.&lt;/li&gt;
+    &lt;li&gt;You could customize this module and add your own trackers.&lt;/li&gt;
+    &lt;li&gt;You could use/call this module&apos;s helper functions to send tracking calls to Totango.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;You could also get the latest version of this module from:&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&quot;https://github.com/shopgo-magento1/magento-totango-integration&quot;&gt;https://github.com/shopgo-magento1/magento-totango-integration&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;For more info about Totango, visit this website:&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&quot;http://www.totango.com/&quot;&gt;http://www.totango.com/&lt;/a&gt;&lt;/p&gt;</description>
+   <license>OSL</license>
+   <license_uri>http://opensource.org/licenses/osl-3.0.php</license_uri>
+   <version>1.0.0</version>
+   <stability>stable</stability>
+   <notes>First release</notes>
+   <authors>
+      <name>
+         <name>ShopGo</name>
+      </name>
+      <user>
+         <user>ShopGo</user>
+      </user>
+      <email>
+         <email>support@shopgo.me</email>
+      </email>
+   </authors>
+   <depends_php_min>5.3.0</depends_php_min>
+   <depends_php_max>7.0.0</depends_php_max>
+   <depends>
+      <package>
+         <name>
+            <name/>
+            <name>Shopgo_Core</name>
+         </name>
+         <channel>
+            <channel/>
+            <channel>community</channel>
+         </channel>
+         <min>
+            <min/>
+            <min>1.0.7</min>
+         </min>
+         <max>
+            <max/>
+            <max/>
+         </max>
+         <files>
+            <files>       </files>
+            <files>       </files>
+         </files>
+      </package>
+      <extension>
+         <name>
+            <name>Core</name>
+         </name>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+      </extension>
+   </depends>
+   <contents>
+      <target>
+         <target>magelocal</target>
+         <target>magecommunity</target>
+         <target>mageetc</target>
+      </target>
+      <path>
+         <path/>
+         <path>Shopgo/Totango</path>
+         <path>modules/Shopgo_Totango.xml</path>
+      </path>
+      <type>
+         <type>file</type>
+         <type>dir</type>
+         <type>file</type>
+      </type>
+      <include>
+         <include/>
+         <include/>
+         <include/>
+      </include>
+      <ignore>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+      </ignore>
+   </contents>
+</_>
