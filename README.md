@@ -3,7 +3,7 @@ Magento Totango Integration
 
 A Magento extension that integrates Magento platform with Totango tracking service.
 
-[![Build Status](https://travis-ci.org/shopgo-me/magento-totango-integration.svg?branch=master)](https://travis-ci.org/shopgo-me/magento-totango-integration)
+[![Build Status](https://travis-ci.org/shopgo-magento1/magento-totango-integration.svg?branch=master)](https://travis-ci.org/shopgo-me/magento-totango-integration)
 [![Dependency Status](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55f9839b3ed894001e0007ab)
 
 What Is Totango?
