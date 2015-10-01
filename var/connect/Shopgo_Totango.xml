@@ -1,5 +1,5 @@
 <_>
-   <form_key>tP6zq4qDMbICLBGH</form_key>
+   <form_key>N1dWYDs5veKDrFLM</form_key>
    <name>Shopgo_Totango</name>
    <channel>community</channel>
    <version_ids>
@@ -21,6 +21,7 @@
     &lt;li&gt;Track enabled shipping methods.&lt;/li&gt;
     &lt;li&gt;Track enabled payment methods.&lt;/li&gt;
     &lt;li&gt;Track successful admin logins.&lt;/li&gt;
+    &lt;li&gt;Server/Backend Integration (HTTP API).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Dependencies&lt;/h3&gt;
 &lt;ul&gt;
@@ -32,6 +33,7 @@
     &lt;li&gt;More trackers could be added in the future.&lt;/li&gt;
     &lt;li&gt;You could customize this module and add your own trackers.&lt;/li&gt;
     &lt;li&gt;You could use/call this module&apos;s helper functions to send tracking calls to Totango.&lt;/li&gt;
+    &lt;li&gt;Totango Javascript Collector is currently not supported.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;You could also get the latest version of this module from:&lt;/strong&gt;&lt;br /&gt;
 &lt;a href=&quot;https://github.com/shopgo-magento1/magento-totango-integration&quot;&gt;https://github.com/shopgo-magento1/magento-totango-integration&lt;/a&gt;&lt;/p&gt;
@@ -39,9 +41,12 @@
 &lt;a href=&quot;http://www.totango.com/&quot;&gt;http://www.totango.com/&lt;/a&gt;&lt;/p&gt;</description>
    <license>OSL</license>
    <license_uri>http://opensource.org/licenses/osl-3.0.php</license_uri>
-   <version>1.0.0</version>
+   <version>1.0.1</version>
    <stability>stable</stability>
-   <notes>First release</notes>
+   <notes>&lt;ul&gt;
+    &lt;li&gt;Fix some minor issues&lt;/li&gt;
+    &lt;li&gt;Add some comments to the code&lt;/li&gt;
+&lt;/ul&gt;</notes>
    <authors>
       <name>
          <name>ShopGo</name>
@@ -74,8 +79,8 @@
             <max/>
          </max>
          <files>
-            <files>       </files>
-            <files>       </files>
+            <files>        </files>
+            <files>        </files>
          </files>
       </package>
       <extension>
@@ -117,4 +122,8 @@
          <ignore/>
       </ignore>
    </contents>
+   <page>1</page>
+   <limit>200</limit>
+   <folder/>
+   <package/>
 </_>

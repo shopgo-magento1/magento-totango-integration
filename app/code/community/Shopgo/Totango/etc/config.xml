@@ -24,7 +24,7 @@
 <config>
     <modules>
         <Shopgo_Totango>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Shopgo_Totango>
     </modules>
     <global>
